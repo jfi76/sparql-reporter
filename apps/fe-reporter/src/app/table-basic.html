@@ -1,0 +1,40 @@
+
+
+<div style="background: yellow; height:100%" class="container-fluid">
+    <as-split direction="horizontal"  >
+      <as-split-area [size]="40">
+        <div style="height:100%; background-color:green">LEFT</div>
+      </as-split-area>
+      <as-split-area [size]="60">
+        <p>RIGHT</p>
+        <p>Table is just a mapping of objects to table rows with <code>ngFor</code></p>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Country</th>
+                    <th scope="col">Area</th>
+                    <th scope="col">Population</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let country of countries; index as i">
+                    <th scope="row">{{ i + 1 }}</th>
+                    <td>
+                        <img
+                            [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag"
+                            class="me-2"
+                            style="width: 20px"
+                        />
+                        {{ country.name }}
+                    </td>
+                    <td>{{ country.area  }}</td>
+                    <td>{{ country.population }}</td>
+                </tr>
+            </tbody>
+        </table>
+        
+      </as-split-area>
+    </as-split>
+</div>    
