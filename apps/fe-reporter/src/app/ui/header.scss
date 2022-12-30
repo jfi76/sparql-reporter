@@ -1,3 +1,10 @@
-.main{
+@import 'bootstrap/scss/bootstrap.scss';
+.header{
+    height: 100%;
+    border-bottom: 2px solid $primary ;    
     
+}
+.active{
+    color: $primary;  
+    background-color: $light;
 }

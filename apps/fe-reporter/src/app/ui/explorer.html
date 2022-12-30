@@ -1,91 +1,17 @@
 
 <!--height:100%;  -->
-<div style="padding:0;height:100%; " class="container-fluid">
+<div  class="container-fluid main">
     <as-split direction="horizontal"  >
       <as-split-area [size]="25">
         <sparql-reporter-tree></sparql-reporter-tree>
-        <table  class="table table-hover align-middle  table-sm">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Country</th>
-                    <th scope="col">Area</th>
-                    <th scope="col">Population</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr  *ngFor="let country of countries; index as i">
-                    <th scope="row">{{ i + 1 }}</th>
-                    <td >
-                        <img
-                            [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag"
-                            class="me-2"
-                            style="width: 20px"
-                        />
-                        {{ country.name}}
-                    </td>
-                    <td >{{ country.area}}</td>
-                    <td >{{ country.population }}</td>
-                </tr>
-            </tbody>
-        </table>
       </as-split-area>
       <as-split-area [size]="75">
         <as-split direction="vertical"  >
             <as-split-area [size]="25">
-                <table class="table table table-hover align-middle  table-sm">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Country</th>
-                            <th scope="col">Area</th>
-                            <th scope="col">Population</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let country of countries; index as i">
-                            <th scope="row">{{ i + 1 }}</th>
-                            <td>
-                                <img
-                                    [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag"
-                                    class="me-2"
-                                    style="width: 20px"
-                                />
-                                {{ country.name }}
-                            </td>
-                            <td>{{ country.area  }}</td>
-                            <td>{{ country.population }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <sparql-reporter-list></sparql-reporter-list>
             </as-split-area>
             <as-split-area [size]="75">
-                <table class="table table-striped">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Country</th>
-                            <th scope="col">Area</th>
-                            <th scope="col">Population</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr *ngFor="let country of countries; index as i">
-                            <th scope="row">{{ i + 1 }}</th>
-                            <td>
-                                <img
-                                    [src]="'https://upload.wikimedia.org/wikipedia/commons/' + country.flag"
-                                    class="me-2"
-                                    style="width: 20px"
-                                />
-                                {{ country.name }}
-                            </td>
-                            <td>{{ country.area  }}</td>
-                            <td>{{ country.population }}</td>
-                        </tr>
-                    </tbody>
-                </table>
-        
+                <sparql-reporter-object></sparql-reporter-object>
             </as-split-area>       
          </as-split>    
         

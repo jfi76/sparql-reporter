@@ -2,14 +2,3 @@
 
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap.scss';
-app-root {
-    display: block;
-    height: 100%;
-  }
-html, body{
- height:100%;
-
-}  
-body.container-fluid{
-    padding-left: 0px;
-}
