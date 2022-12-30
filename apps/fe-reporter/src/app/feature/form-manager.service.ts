@@ -1,0 +1,1 @@
+/* listens emmiters and calls sparql service*/
