@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'sparql-reporter-explorer',
@@ -8,6 +8,11 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 })
 
 export class ExplorerComponent implements OnInit {
+    @Input() 
+    treeId='';
+    @Input() 
+    objectId='';
+    treeIdEmitter$= new EventEmitter();  
     countries=[{
 		name: 'Russia',
 		flag: 'f/f3/Flag_of_Russia.svg',
@@ -23,6 +28,9 @@ export class ExplorerComponent implements OnInit {
   ngOnInit(): void {
       console.log('inited');
   }
-
+  treeIdEmitterHandler(event: any){
+    console.log(event.detail);
+    this.treeIdEmitter$.emit(event.detail);
+  }
 
 }
