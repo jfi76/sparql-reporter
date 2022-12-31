@@ -23,7 +23,4 @@ export class AppComponent implements OnInit {
          this.props['objectId'] = params.objectId;
       });      
   }
-  treeIdEmitterHandler(event:any){
-      console.log(event);
-  }
 }
