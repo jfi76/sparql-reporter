@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, map, switchMap, take, tap, throwError } from 'rxjs';
+import { catchError, map,  take,  throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,7 +11,7 @@ export class Sparql {
   headers={'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'};
   prefix=`PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
   PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-  PREFIX mig: <http://example.org/MIGRATION#>
+  PREFIX mig: <http://www.example.com/MIGRATION#>
   PREFIX owl: <http://www.w3.org/2002/07/owl#>
   PREFIX js: <http://www.example.com/JSON#>
   PREFIX etl:<http://www.example.com/ETL#>
@@ -29,12 +29,9 @@ export class Sparql {
 
   }
   query(stmt:string, infer=''){
-    // const initStmt=stmt;
     return this.http.post(this.queryUrl,`query=${encodeURIComponent(this.prefix + stmt)}${infer!=='' ? '&infer='+infer: '' }`,{headers:this.headers}).pipe(
         take(1),        
         map((response:any)=>{
-            
-            //response.converted=JSON.parse(JSON.stringify(response.results.bindings));
             response.results=response.results.bindings;
             response.results.stmt=stmt;
             this.replacePrefixes(response.results);
@@ -55,8 +52,6 @@ replacePrefixes(result:any[]){
             if (result[i][name].type==='uri'){
                 let foundPrefix=false;
                 for (let a=0; a<this.prefixReplace.length; a++){
-                    // console.log(result[i][name].value + ' vs ' + this.prefixReplace[a].str + ' ' + a + ' of ' +this.prefixReplace.length );
-                    
                     if (result[i][name].value.startsWith(this.prefixReplace[a].str) 
                     && !result[i][name].value.includes('/',this.prefixReplace[a].str.length) 
                     && !result[i][name].value.includes('#',this.prefixReplace[a].str.length) 

@@ -27,14 +27,28 @@ getUpperLevel(){
 getChild(id:string){
     this.sparql.query(`select *
     where {
+     bind(${id} as ?parent ) .   
      ?iri rdf:type owl:Class .
      ?iri rdfs:label ?label .
-     optional{?iri rdfs:subClassOf ?parent .  }
-     filter (coalesce(?parent,'')='')
-    }`);
+     ?iri rdfs:subClassOf ?parent .  
+     
+    }`).subscribe((data)=>{
+        console.log(data);
+       }
+       );
 
     }
 getNodeChildParents(id:string){
-  console.log('recursive');
+    this.sparql.query(`select *
+    where {
+     bind(${id} as ?parent ) .   
+     ?iri rdf:type owl:Class .
+     ?iri rdfs:label ?label .
+     ?iri rdfs:subClassOf ?parent .  
+     
+    }`).subscribe((data)=>{
+        console.log(data);
+       }
+       );
 }
 }
