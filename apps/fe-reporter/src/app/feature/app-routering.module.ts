@@ -8,8 +8,13 @@ imports:[
     RouterModule.forRoot([
         {path:'',
          pathMatch:'full',
+         redirectTo: 'explorer'
+        },
+        {path:'explorer',
+         pathMatch:'full',
          component: ExplorerComponent
         },
+
         {path:'connection',
          pathMatch:'full',
          component: ConnectionComponent

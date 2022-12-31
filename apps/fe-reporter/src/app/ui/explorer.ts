@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'sparql-reporter-explorer',
@@ -8,29 +9,29 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit } from 
 })
 
 export class ExplorerComponent implements OnInit {
-    @Input() 
     treeId='';
-    @Input() 
     objectId='';
-    treeIdEmitter$= new EventEmitter();  
-    countries=[{
-		name: 'Russia',
-		flag: 'f/f3/Flag_of_Russia.svg',
-		area: 17075200,
-		population: 146989754,
-	},
-	{
-		name: 'Canada',
-		flag: 'c/cf/Flag_of_Canada.svg',
-		area: 9976140,
-		population: 36624199,
-	},]
-  ngOnInit(): void {
-      console.log('inited');
-  }
-  treeIdEmitterHandler(event: any){
-    console.log(event.detail);
-    this.treeIdEmitter$.emit(event.detail);
-  }
+
+    /*
+    props:{[pror: string]: unknown}={
+        treeId:'',
+        objectId:''
+      }*/
+      constructor(public activateRoute: ActivatedRoute, public router: Router){
+    
+      }
+      ngOnInit(): void {
+          this.activateRoute.queryParams.subscribe((params:any)=>{
+             this.treeId=params.treeId || '';
+             this.objectId=params.objectId || '';
+          });      
+      }
+
+  treeIdEmitterHandler(id: string){
+    console.log('treeIdEmitterHandler:');
+    console.log(id);
+    this.treeId=id;
+    this.router.navigate([],{relativeTo:this.activateRoute,queryParams:{treeId:this.treeId,objectId:this.objectId}})    
+ }
 
 }

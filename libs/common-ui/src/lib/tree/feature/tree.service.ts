@@ -25,6 +25,16 @@ getUpperLevel(){
 
     }  
 getChild(id:string){
-    this.sparql.query('')
+    this.sparql.query(`select *
+    where {
+     ?iri rdf:type owl:Class .
+     ?iri rdfs:label ?label .
+     optional{?iri rdfs:subClassOf ?parent .  }
+     filter (coalesce(?parent,'')='')
+    }`);
+
     }
+getNodeChildParents(id:string){
+  console.log('recursive');
+}
 }
