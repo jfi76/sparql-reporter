@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, throwError } from 'rxjs';
+import { BehaviorSubject, catchError, map, switchMap, take, tap, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -18,25 +18,63 @@ export class Sparql {
   
   `;
   prefixReplace=[
-    {str:'http://www.w3.org/1999/02/22-rdf-syntax-ns#', replace:'rdf'},
-    {str:'http://www.w3.org/2000/01/rdf-schema#', replcase:'rdfs'},
-    {str:'http://example.org/MIGRATION#', replcase:'mig'},
-    {str:'http://www.w3.org/2002/07/owl#', replcase:'owl'},
-    {str:'http://www.example.com/JSON#', replcase:'js'},
-    {str:'http://www.example.com/ETL#', replcase:'etl'},
+    {str:'http://www.w3.org/1999/02/22-rdf-syntax-ns#', replace:'rdf:'},
+    {str:'http://www.w3.org/2000/01/rdf-schema#', replace:'rdfs:'},
+    {str:'http://www.example.com/MIGRATION#', replace:'mig:'},
+    {str:'http://www.w3.org/2002/07/owl#', replace:'owl:'},
+    {str:'http://www.example.com/JSON#', replace:'js:'},
+    {str:'http://www.example.com/ETL#', replace:'etl:'},
 ]
   constructor(private http: HttpClient){
 
   }
   query(stmt:string, infer=''){
-    const initStmt=stmt;
+    // const initStmt=stmt;
     return this.http.post(this.queryUrl,`query=${encodeURIComponent(this.prefix + stmt)}${infer!=='' ? '&infer='+infer: '' }`,{headers:this.headers}).pipe(
+        take(1),        
+        map((response:any)=>{
+            
+            //response.converted=JSON.parse(JSON.stringify(response.results.bindings));
+            response.results=response.results.bindings;
+            response.results.stmt=stmt;
+            this.replacePrefixes(response.results);
+            return response;
+        }),
         catchError((err:ErrorEvent)=>{
-            console.log(initStmt);
+            console.log(stmt);
             console.log(err);
             return throwError(err);
-        })
+        })               
     );            
   }
+
+replacePrefixes(result:any[]){
+    
+    for (let i=0; i< result.length; i++){
+        for(const name in result[i]){
+            if (result[i][name].type==='uri'){
+                let foundPrefix=false;
+                for (let a=0; a<this.prefixReplace.length; a++){
+                    // console.log(result[i][name].value + ' vs ' + this.prefixReplace[a].str + ' ' + a + ' of ' +this.prefixReplace.length );
+                    
+                    if (result[i][name].value.startsWith(this.prefixReplace[a].str) 
+                    && !result[i][name].value.includes('/',this.prefixReplace[a].str.length) 
+                    && !result[i][name].value.includes('#',this.prefixReplace[a].str.length) 
+                    ){
+                        console.log('got' + this.prefixReplace[a].replace);
+                        result[i][name].value=result[i][name].value.replace(this.prefixReplace[a].str,this.prefixReplace[a].replace);
+                        foundPrefix=true;
+                        break;
+                    }
+
+                }
+                if (!foundPrefix){
+                    result[i][name].value= `<${result[i][name].value}>`;
+                    break;
+                }                
+            }
+        }
+    }
+}
 
 }
