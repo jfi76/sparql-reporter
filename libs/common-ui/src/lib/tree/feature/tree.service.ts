@@ -126,15 +126,24 @@ export class TreeService {
     this.content=[...newContent];
     console.log(this.content);
   }
+  removeChildren(treeId:string){
+    const newContent:ITreeNode[]=[];
+    this.content.forEach((row,index)=>{
+      if (treeId!==row.hasParentId) newContent.push(row);
+    });
 
-  processChange(treeId: string) {
+    this.content=[...newContent];    
+  }
+  processChange(treeId: string):void {
+    console.log('processCahnge' + treeId);
     const currentNodeIndex = this.content.findIndex(
       (obj) => obj.iri === treeId
     );
-    
+    console.log(this.content[currentNodeIndex]);
     if (currentNodeIndex !==-1 && this.content[currentNodeIndex]?.state === ITreeState.notOpen) {
       this.content[currentNodeIndex].isActive = true;
       this.content[currentNodeIndex].iconRightEnabled = true;
+      this.content[currentNodeIndex].state = ITreeState.open;
       let stmt = this.getChildStmt(treeId);
       let custTreeId = treeId
       if (treeId === OWLTHING) {
@@ -145,7 +154,15 @@ export class TreeService {
       .subscribe((data: any) => {
         this.insertChild(custTreeId, data.results);          
         this.content$.next([...this.content]);                      
-      });      
-    }    
+      });  
+      return;    
+    }
+
+    if (currentNodeIndex !==-1 && this.content[currentNodeIndex]?.state === ITreeState.open && this.content[currentNodeIndex]?.hasChildren) {
+      this.removeChildren(treeId);
+      console.log('remove');
+      console.log(this.content);
+      this.content$.next([...this.content]);  
+    }        
   }
 }

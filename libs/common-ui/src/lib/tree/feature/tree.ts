@@ -27,10 +27,6 @@ export class TreeComponent implements OnInit, OnChanges {
         this.treeService.processChange(treeId.currentValue);
       }
   }
-  setTreeId(id:string):void{
-    console.log('do set tree component');
-    this.treeIdEmitter$.emit(id);
-  }
   treeClik(iri:string){
     this.treeIdEmitter$.emit(iri);
   }  

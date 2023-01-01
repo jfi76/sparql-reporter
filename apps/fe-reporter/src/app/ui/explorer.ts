@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ITreeState } from 'libs/common-ui/src/lib/tree/feature/tree.service';
 
 @Component({
   selector: 'sparql-reporter-explorer',
@@ -12,11 +13,6 @@ export class ExplorerComponent implements OnInit {
     treeId='';
     objectId='';
 
-    /*
-    props:{[pror: string]: unknown}={
-        treeId:'',
-        objectId:''
-      }*/
       constructor(public activateRoute: ActivatedRoute, public router: Router){
     
       }
@@ -28,8 +24,6 @@ export class ExplorerComponent implements OnInit {
       }
 
   treeIdEmitterHandler(id: string){
-    console.log('treeIdEmitterHandler:');
-    console.log(id);
     this.treeId=id;
     this.router.navigate([],{relativeTo:this.activateRoute,queryParams:{treeId:this.treeId,objectId:this.objectId}})    
  }
