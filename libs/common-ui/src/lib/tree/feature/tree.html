@@ -8,10 +8,14 @@ tree
 <div class="p-2 hover">
         <div *ngFor="let node of content$ | ngrxPush ; index as i" class="d-flex node" (click)="treeClik(node.iri)">
             <span style="white-space: pre; font-size: 12px;" >{{node.space}}</span>            
-            <span >
+            <span *ngIf="node.hasChildren">
                 <i *ngIf="node.iconRightEnabled" class="bi bi-caret-right"></i>
                 <i *ngIf="!node.iconRightEnabled" class="bi bi-caret-down"></i>
             </span>                
+            <span *ngIf="!node.hasChildren" style="visibility:hidden">
+                <i *ngIf="node.iconRightEnabled" class="bi bi-caret-right"></i>
+                <i *ngIf="!node.iconRightEnabled" class="bi bi-caret-down"></i>
+            </span>                            
             <span>{{node.label }}</span>
         </div>
     </div>

@@ -11,6 +11,7 @@ export interface ITreeNodeQuery {
   iri: IQueryField;
   label: IQueryField;
   parent: IQueryField;
+  itemCount:IQueryField;
 }
 export interface ITreeNode {
   iri: string;
@@ -33,7 +34,7 @@ export class TreeService {
     {
       iri: OWLTHING,
       level: 0,
-      hasChildren: false,
+      hasChildren: true,
       state: ITreeState.notOpen,
       label: 'Classes',
       hasParentId: '',
@@ -45,22 +46,37 @@ export class TreeService {
   content$ = new BehaviorSubject<ITreeNode[]>([...this.content]);
 
   constructor(public sparql: Sparql) {}
-  getUpperLevelStmt = `select ?iri (coalesce(?parentStr,'') as ?parent) ?label
+  getUpperLevelStmt = `select ?iri (coalesce(?parentStr,'') as ?parent) ?label (coalesce(?count,0) as ?itemCount) 
   where {
-   ?iri rdf:type owl:Class .
-   ?iri rdfs:label ?label .
-   optional{?iri rdfs:subClassOf ?parentStr .  }
-   filter (coalesce(?parentStr,'')='')
+    {
+    ?iri rdf:type owl:Class .
+    ?iri rdfs:label ?label .
+    optional{?iri rdfs:subClassOf ?parentStr .  }
+    filter (coalesce(?parentStr,'')='')
+    } .
+    optional
+    {  select ?iri (count(*) as ?count) where  
+      {
+        ?child rdfs:subClassOf ?iri .
+      } group by ?iri          
+    }     
   }
  `;
-  getChildStmt = (id: string) => `select ?iri ?parent ?label
-where {
- bind(${id} as ?parent ) .   
- ?iri rdf:type owl:Class .
- ?iri rdfs:label ?label .
- ?iri rdfs:subClassOf ?parent .  
- 
-}`;
+  getChildStmt = (id: string) => `select ?iri ?parent ?label (coalesce(?count,0) as ?itemCount) 
+  where {
+   {
+     bind(${id} as ?parent ) .   
+     ?iri rdf:type owl:Class .
+     ?iri rdfs:label ?label .
+     ?iri rdfs:subClassOf ?parent .     
+    } .
+    optional
+    {  select ?iri (count(*) as ?count) where  
+      {
+        ?child rdfs:subClassOf ?iri .
+      } group by ?iri          
+    } 
+  }`;
   getSubNodes(stmt: string): Observable<ITreeNodeQuery[]> {
     console.log(stmt);
     return this.sparql.query(stmt);
@@ -69,20 +85,21 @@ where {
   formNode(
     content:ITreeNode[],
     iri: string,
-    hasChildren: boolean,
+
     label: string,
     hasParentId: string,
+    itemCount:string,
     iconRightEnabled: boolean = true,
     isActive: boolean = false
   ){
     const parent: any = this.content.find((obj) => obj.iri === hasParentId);
 
     const level: any = parent?.level + 1;
-
+    
     content.push({
       iri: iri,
       level: level,
-      hasChildren: hasChildren,
+      hasChildren: (itemCount!=='0' ? true :false ),
       state: ITreeState.notOpen,
       label: label,
       hasParentId: hasParentId,
@@ -93,10 +110,11 @@ where {
   }
 
   insertChild(parentId: string, data: ITreeNodeQuery[]) {
+    console.log(data);
     const insertRows:ITreeNode[]=[];
     const newContent:ITreeNode[]=[];
-    for (const { iri, parent, label } of data as ITreeNodeQuery[]) {      
-      this.formNode(insertRows,iri.value, false, label.value, parentId);
+    for (const { iri, parent, label, itemCount } of data as ITreeNodeQuery[]) {      
+      this.formNode(insertRows,iri.value,  label.value, parentId, itemCount.value);
     }
     this.content.forEach((row,index)=>{
       if (parentId===row.iri){
@@ -104,13 +122,12 @@ where {
         insertRows.forEach(insRow=>newContent.push(insRow));
       } else newContent.push(row);
     });
-    console.log(newContent);
+
     this.content=[...newContent];
+    console.log(this.content);
   }
 
   processChange(treeId: string) {
-    console.log('process ' + treeId);
-
     const currentNodeIndex = this.content.findIndex(
       (obj) => obj.iri === treeId
     );
@@ -124,19 +141,11 @@ where {
         stmt = this.getUpperLevelStmt;
         custTreeId = OWLTHING;
       } 
-      //this.content$=
       this.getSubNodes(stmt)
       .subscribe((data: any) => {
-        console.log(' start state');
-        console.log(this.content);  
         this.insertChild(custTreeId, data.results);          
-        console.log(this.content);
         this.content$.next([...this.content]);                      
-        console.log('renewed');
-      });
-      
-
-    }
-    
+      });      
+    }    
   }
 }
