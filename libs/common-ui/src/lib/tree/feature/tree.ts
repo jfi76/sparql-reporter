@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, Output, SimpleChanges, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import {TreeService, OWLTHING} from './tree.service';
+import {TreeService, OWLTHING, ITreeNode} from './tree.service';
 
 @Component({
   selector: 'sparql-reporter-tree',
@@ -15,21 +15,16 @@ export class TreeComponent implements OnInit, OnChanges {
     treeId='';
     @Output()
     treeIdEmitter$= new EventEmitter(); 
-    content$=new Observable;   
+    content$=new Observable<ITreeNode[]>;   
   constructor(public treeService: TreeService ){
-    this.content$=treeService.content$;
-
+    this.content$=this.treeService.content$;
   }   
   ngOnInit(): void {
-      console.log('tree inited');
-      
+      console.log('tree inited');      
   }
   ngOnChanges({treeId}: SimpleChanges): void {
       if (treeId){
-        console.log('get tree: ' + treeId.currentValue);
         this.treeService.processChange(treeId.currentValue);
-        // if (treeId.currentValue===OWLTHING) this.treeService.getUpperLevel();
-        // else this.treeService.getNodeChildParents(treeId.currentValue);
       }
   }
   setTreeId(id:string):void{
