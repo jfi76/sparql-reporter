@@ -11,6 +11,7 @@ import { ITreeState } from 'libs/common-ui/src/lib/tree/feature/tree.service';
 
 export class ExplorerComponent implements OnInit {
     treeId='';
+    treeState:ITreeState=ITreeState.notOpen;
     objectId='';
 
       constructor(public activateRoute: ActivatedRoute, public router: Router){
@@ -23,9 +24,11 @@ export class ExplorerComponent implements OnInit {
           });      
       }
 
-  treeIdEmitterHandler(id: string){
-    this.treeId=id;
-    this.router.navigate([],{relativeTo:this.activateRoute,queryParams:{treeId:this.treeId,objectId:this.objectId}})    
+  treeIdEmitterHandler(obj:{iri: string, state:ITreeState}){
+    console.log(obj);
+    this.treeId=obj.iri;
+    this.treeState=obj.state;
+    this.router.navigate([],{relativeTo:this.activateRoute,queryParams:{treeId:this.treeId,objectId:this.objectId,treeState:this.treeState}})    
  }
 
 }

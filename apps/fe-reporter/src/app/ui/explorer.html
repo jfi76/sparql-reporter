@@ -3,7 +3,7 @@
 <div  class="m-0 border-0 h-100">
     <as-split direction="horizontal"  >
       <as-split-area [size]="25">
-        <sparql-reporter-tree [treeId]="treeId" (treeIdEmitter$)="treeIdEmitterHandler($event)" ></sparql-reporter-tree>
+        <sparql-reporter-tree [tree]="{iri:treeId, state:treeState}"  (treeIdEmitter$)="treeIdEmitterHandler($event)" ></sparql-reporter-tree>
       </as-split-area>
       <as-split-area [size]="75">
         <as-split direction="vertical"  >

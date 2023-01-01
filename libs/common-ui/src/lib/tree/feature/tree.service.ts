@@ -162,6 +162,7 @@ export class TreeService {
       this.removeChildren(treeId);
       console.log('remove');
       console.log(this.content);
+      this.content[currentNodeIndex].state=ITreeState.notOpen;
       this.content$.next([...this.content]);  
     }        
   }

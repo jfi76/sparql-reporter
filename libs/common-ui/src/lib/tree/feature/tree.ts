@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, Output, SimpleChanges, EventEmitter } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import {TreeService, OWLTHING, ITreeNode} from './tree.service';
+import {TreeService, OWLTHING, ITreeNode, ITreeState} from './tree.service';
 
 @Component({
   selector: 'sparql-reporter-tree',
@@ -12,7 +12,9 @@ import {TreeService, OWLTHING, ITreeNode} from './tree.service';
 
 export class TreeComponent implements OnInit, OnChanges {
     @Input() 
-    treeId='';
+    tree:{iri:string,state:string}={iri:'',state:''};
+    // @Input()
+    // treeState='';
     @Output()
     treeIdEmitter$= new EventEmitter(); 
     content$=new Observable<ITreeNode[]>;   
@@ -22,12 +24,14 @@ export class TreeComponent implements OnInit, OnChanges {
   ngOnInit(): void {
       console.log('tree inited');      
   }
-  ngOnChanges({treeId}: SimpleChanges): void {
-      if (treeId){
-        this.treeService.processChange(treeId.currentValue);
+  ngOnChanges({tree}: SimpleChanges): void {
+    console.log(tree);
+      if (tree){
+        this.treeService.processChange(tree.currentValue.iri);
       }
   }
-  treeClik(iri:string){
-    this.treeIdEmitter$.emit(iri);
+  treeClik( obj:{iri:string, state:ITreeState}){
+    console.log(obj);
+    this.treeIdEmitter$.emit(obj);
   }  
 }
