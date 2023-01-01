@@ -2,11 +2,39 @@ import { Sparql } from '@sparql-reporter/services';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, throwError } from 'rxjs';
 
+export enum ITreeState{
+open='open',
+notOpen='notOpen'
+}
+
+export interface ITree{
+    level:number;
+    hasChildren:boolean;
+    state:ITreeState;
+    label:string;
+    hasParentId:string;
+    icon:string; 
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class TreeService {
-  constructor(private sparql: Sparql){
+    iconState={
+        notOpen:'>',
+        open:'>', 
+     }
+    
+  content:ITree[]=[{
+    level:0,
+    hasChildren: false,
+    state:ITreeState.open,
+    label:'Classes',
+    hasParentId:'',
+    icon: this.iconState.open,   
+  }];  
+  
+  constructor(public sparql: Sparql){
 
   }
 getUpperLevel(){

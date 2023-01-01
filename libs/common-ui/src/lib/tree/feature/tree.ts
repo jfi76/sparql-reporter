@@ -14,7 +14,7 @@ export class TreeComponent implements OnInit, OnChanges {
     treeId='';
     @Output()
     treeIdEmitter$= new EventEmitter();    
-  constructor(private treeService: TreeService ){
+  constructor(public treeService: TreeService ){
 
   }   
   ngOnInit(): void {
