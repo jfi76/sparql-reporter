@@ -4,19 +4,14 @@ tree
 <button (click)="setTreeId('mig:postgres')">test2</button>
 -->
 
-<table  class="table table-hover align-middle  table-sm ">
-    <thead>
-        <tr>
-            <th scope="col">space</th>
-            <th scope="col">sign</th>
-            <th scope="col">label</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr  *ngFor="let node of treeService.content; index as i">
-            <td >{{node.level }}</td>
-            <td >{{node.icon }}</td>
-            <td >{{node.label }}</td>            
-        </tr>
-    </tbody>
-</table>
+
+<div class="p-2 hover">
+        <div *ngFor="let node of this.treeService.content$| ngrxPush ; index as i" class="d-flex node" (click)="treeClik(node.iri)">
+            <span style="white-space: pre; font-size: 12px;" >{{node.space}}</span>            
+            <span >
+                <i *ngIf="node.iconRightEnabled" class="bi bi-caret-right"></i>
+                <i *ngIf="!node.iconRightEnabled" class="bi bi-caret-down"></i>
+            </span>                
+            <span>{{node.label }}</span>
+        </div>
+    </div>
