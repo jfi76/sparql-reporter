@@ -8,7 +8,7 @@ import { ITreeNode } from '../feature/tree.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class TreeNodeComponent implements OnInit {
+export class TreeNodeComponent {
   @Input()
   node?:ITreeNode;
   @HostBinding('class.icon-not-visible')
@@ -16,18 +16,5 @@ export class TreeNodeComponent implements OnInit {
   hasNoChildren=false;
   @HostBinding('class.active')
   @Input()
-  isActive=false;
-
-  ngOnInit(): void {
-      console.log('node item inited');
-  }
-
-
-  ngOnChanges({node,isActive}: SimpleChanges): void {
-      if (node){
-//        this.iconNotVisible=node.currentValue.hasChildren;
-         console.log(isActive.currentValue);
-      }
-  } 
-  
+  isActive=false;  
 }

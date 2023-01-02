@@ -30,7 +30,7 @@ export const OWLTHING = 'owl:Thing';
 })
 export class TreeService {
   shift = '     ';
-
+  previousIri='';
   content: ITreeNode[] = [
     {
       iri: OWLTHING,
@@ -116,7 +116,7 @@ export class TreeService {
     const insertRows:ITreeNode[]=[];
     const newContent:ITreeNode[]=[];
     for (const { iri, parent, label, itemCount } of data as ITreeNodeQuery[]) {      
-      this.formNode(insertRows,iri.value,  label.value, parentId, itemCount.value);
+      this.formNode(insertRows,iri.value,  label.value, parentId, itemCount.value, false, false);
     }
     this.content.forEach((row,index)=>{
       if (parentId===row.iri){
@@ -168,19 +168,22 @@ export class TreeService {
     const currentNodeIndex = this.content.findIndex(
       (obj) => obj.iri === treeId
     );
-    console.log(this.content);
-    console.log(currentNodeIndex);
+    console.log(currentNodeIndex + ' ' + treeId);
     if (currentNodeIndex!==-1) this.content[currentNodeIndex].isActive = false;
   }
 
   processChange(treeId: string):void {
+    // deactivation 
+    if ( this.previousIri!==treeId) this.deactivate( this.previousIri);
+    this.previousIri=treeId;
+     
     console.log('processCahnge' + treeId);
     const currentNodeIndex = this.content.findIndex(
       (obj) => obj.iri === treeId
     );
-
+    if (currentNodeIndex !==-1) this.content[currentNodeIndex].isActive = true;
     if (currentNodeIndex !==-1 && this.content[currentNodeIndex]?.state === ITreeState.notOpen) {
-      this.content[currentNodeIndex].isActive = true;
+
       this.content[currentNodeIndex].iconRightEnabled = true;
       this.content[currentNodeIndex].state = ITreeState.open;
       let stmt = this.getChildStmt(treeId);
