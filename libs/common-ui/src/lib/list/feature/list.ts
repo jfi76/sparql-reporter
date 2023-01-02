@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'sparql-reporter-list',
@@ -7,11 +7,16 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class ListComponent implements OnInit {
-
+export class ListComponent implements OnInit, OnChanges {
+  @Input()
+  treeId=''
   ngOnInit(): void {
       console.log('list inited');
   }
-
+ ngOnChanges({treeId}: SimpleChanges): void {
+     if (treeId){
+      console.log('list id : '+treeId.currentValue);
+     }
+ }
   
 }
