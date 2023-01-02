@@ -107,10 +107,11 @@ export class TreeService {
       iconRightEnabled: iconRightEnabled,
       isActive: isActive,
     });     
+
   }
 
   insertChild(parentId: string, data: ITreeNodeQuery[]) {
-    console.log(data);
+
     const insertRows:ITreeNode[]=[];
     const newContent:ITreeNode[]=[];
     for (const { iri, parent, label, itemCount } of data as ITreeNodeQuery[]) {      
@@ -124,22 +125,51 @@ export class TreeService {
     });
 
     this.content=[...newContent];
-    console.log(this.content);
+
   }
+
+  getChildNodesIndex(iri:string):number[] {
+    const retArr:number[]=[];
+    for (let i=0; i < this.content.length || 0; i++ ){
+      if (this.content[i].hasParentId===iri) retArr.push(i);
+    }
+  return retArr;
+  }
+
+  getNode(iri:string){
+    return this.content.find(node=>node.iri=iri); 
+  } 
+
+  getChildNodesRecursive(iri:string):number[]{
+    let childNodes:number[]=[];
+    const currentChild:number[]=this.getChildNodesIndex(iri);
+    currentChild.forEach((item,index)=>{
+      const currArr=this.getChildNodesIndex(this.content[item].iri);
+      if (currArr.length>0) {
+        childNodes.push(item);
+        childNodes=[...childNodes,...this.getChildNodesRecursive(this.content[item].iri)];
+      }
+      else childNodes.push(item);
+    });
+    return childNodes;
+  }
+
   removeChildren(treeId:string){
+    const removeArray = this.getChildNodesRecursive(treeId);    
     const newContent:ITreeNode[]=[];
     this.content.forEach((row,index)=>{
-      if (treeId!==row.hasParentId) newContent.push(row);
+      if (removeArray.indexOf(index)===-1) newContent.push(row);
+      else console.log('not inc'+index);
     });
-
-    this.content=[...newContent];    
+    this.content=[...newContent];        
   }
+
   processChange(treeId: string):void {
     console.log('processCahnge' + treeId);
     const currentNodeIndex = this.content.findIndex(
       (obj) => obj.iri === treeId
     );
-    console.log(this.content[currentNodeIndex]);
+
     if (currentNodeIndex !==-1 && this.content[currentNodeIndex]?.state === ITreeState.notOpen) {
       this.content[currentNodeIndex].isActive = true;
       this.content[currentNodeIndex].iconRightEnabled = true;
@@ -160,8 +190,6 @@ export class TreeService {
 
     if (currentNodeIndex !==-1 && this.content[currentNodeIndex]?.state === ITreeState.open && this.content[currentNodeIndex]?.hasChildren) {
       this.removeChildren(treeId);
-      console.log('remove');
-      console.log(this.content);
       this.content[currentNodeIndex].state=ITreeState.notOpen;
       this.content$.next([...this.content]);  
     }        
