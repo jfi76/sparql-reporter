@@ -18,6 +18,6 @@ tree
                 <i *ngIf="!node.iconRightEnabled" class="bi bi-caret-down"></i>
             </span>                            
             <span>{{node.label }}</span> -->
-            <sparql-reporter-tree-node [node]="node" [isActive]="node.isActive" [hasNoChildren]="!node.hasChildren"></sparql-reporter-tree-node>
+            <sparql-reporter-tree-node [node]="node" [isActive]="node.isActive" [hasNoChildren]="!node.hasChildren" [state]="node.state"></sparql-reporter-tree-node>
         </div>
     </div>

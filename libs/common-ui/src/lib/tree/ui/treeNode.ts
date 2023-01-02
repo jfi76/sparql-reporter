@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, HostBinding, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { ITreeNode } from '../feature/tree.service';
+import { ITreeNode, ITreeState } from '../feature/tree.service';
 
 @Component({
   selector: 'sparql-reporter-tree-node',
@@ -8,7 +8,7 @@ import { ITreeNode } from '../feature/tree.service';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class TreeNodeComponent {
+export class TreeNodeComponent implements OnChanges{
   @Input()
   node?:ITreeNode;
   @HostBinding('class.icon-not-visible')
@@ -16,5 +16,15 @@ export class TreeNodeComponent {
   hasNoChildren=false;
   @HostBinding('class.active')
   @Input()
-  isActive=false;  
+  isActive=false; 
+  @Input()
+  state:ITreeState=ITreeState.notOpen;
+  public collapsed=false;
+
+  ngOnChanges({state}: SimpleChanges): void {
+      if (state){
+        this.collapsed=state.currentValue === ITreeState.notOpen ? true : false;
+      }
+  }
+
 }

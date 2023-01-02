@@ -1,8 +1,8 @@
 <div class="node">
 <span style="white-space: pre; font-size: 12px;" >{{node?.space}}</span>            
 <span class="icon" >
-    <i *ngIf="node?.iconRightEnabled" class="bi bi-caret-right"></i>
-    <i *ngIf="!node?.iconRightEnabled" class="bi bi-caret-down"></i>
+    <i *ngIf="collapsed" class="bi bi-caret-right"></i>
+    <i *ngIf="!collapsed" class="bi bi-caret-down"></i>
 </span>                
 <span class="label">{{node?.label }}</span>
 </div>

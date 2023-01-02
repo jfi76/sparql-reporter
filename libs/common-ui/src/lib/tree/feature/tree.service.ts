@@ -21,7 +21,7 @@ export interface ITreeNode {
   label: string | IQueryField['value'];
   hasParentId: string | IQueryField['value'];
   space: string;
-  iconRightEnabled: boolean;
+  collapsedIcon: boolean;
   isActive: boolean;
 }
 export const OWLTHING = 'owl:Thing';
@@ -40,7 +40,7 @@ export class TreeService {
       label: 'Classes',
       hasParentId: '',
       space: '',
-      iconRightEnabled: true,
+      collapsedIcon: true,
       isActive: true,
     },
   ];
@@ -90,8 +90,8 @@ export class TreeService {
     label: string,
     hasParentId: string,
     itemCount:string,
-    iconRightEnabled: boolean = true,
-    isActive: boolean = false
+    collapseIcon: boolean,
+    isActive: boolean
   ){
     const parent: any = this.content.find((obj) => obj.iri === hasParentId);
 
@@ -105,7 +105,7 @@ export class TreeService {
       label: label,
       hasParentId: hasParentId,
       space: this.shift.repeat(level),
-      iconRightEnabled: iconRightEnabled,
+      collapsedIcon: collapseIcon, // not needed !!
       isActive: isActive,
     });     
 
@@ -169,7 +169,11 @@ export class TreeService {
       (obj) => obj.iri === treeId
     );
     console.log(currentNodeIndex + ' ' + treeId);
-    if (currentNodeIndex!==-1) this.content[currentNodeIndex].isActive = false;
+    if (currentNodeIndex!==-1) {
+      this.content[currentNodeIndex].isActive = false;
+      this.content[currentNodeIndex].collapsedIcon=true;
+      // this.content[currentNodeIndex].state=ITreeState.notOpen;
+    }
   }
 
   processChange(treeId: string):void {
@@ -181,10 +185,11 @@ export class TreeService {
     const currentNodeIndex = this.content.findIndex(
       (obj) => obj.iri === treeId
     );
-    if (currentNodeIndex !==-1) this.content[currentNodeIndex].isActive = true;
+    if (currentNodeIndex !==-1) {
+      this.content[currentNodeIndex].isActive = true;
+      this.content[currentNodeIndex].collapsedIcon = false;
+    }
     if (currentNodeIndex !==-1 && this.content[currentNodeIndex]?.state === ITreeState.notOpen) {
-
-      this.content[currentNodeIndex].iconRightEnabled = true;
       this.content[currentNodeIndex].state = ITreeState.open;
       let stmt = this.getChildStmt(treeId);
       let custTreeId = treeId
