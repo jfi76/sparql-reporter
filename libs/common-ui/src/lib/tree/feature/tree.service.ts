@@ -30,6 +30,7 @@ export const OWLTHING = 'owl:Thing';
 })
 export class TreeService {
   shift = '     ';
+
   content: ITreeNode[] = [
     {
       iri: OWLTHING,
@@ -143,7 +144,7 @@ export class TreeService {
   getChildNodesRecursive(iri:string):number[]{
     let childNodes:number[]=[];
     const currentChild:number[]=this.getChildNodesIndex(iri);
-    currentChild.forEach((item,index)=>{
+    currentChild.forEach((item)=>{
       const currArr=this.getChildNodesIndex(this.content[item].iri);
       if (currArr.length>0) {
         childNodes.push(item);
@@ -162,6 +163,14 @@ export class TreeService {
       else console.log('not inc'+index);
     });
     this.content=[...newContent];        
+  }
+  deactivate(treeId:string){
+    const currentNodeIndex = this.content.findIndex(
+      (obj) => obj.iri === treeId
+    );
+    console.log(this.content);
+    console.log(currentNodeIndex);
+    if (currentNodeIndex!==-1) this.content[currentNodeIndex].isActive = false;
   }
 
   processChange(treeId: string):void {

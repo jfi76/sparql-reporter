@@ -26,12 +26,13 @@ export class TreeComponent implements OnInit, OnChanges {
   }
   ngOnChanges({tree}: SimpleChanges): void {
     console.log(tree);
-      if (tree){
+      if (tree){              
+        if (tree.previousValue) this.treeService.deactivate(tree.previousValue.iri);              
         this.treeService.processChange(tree.currentValue.iri);
       }
   }
   treeClik( obj:{iri:string, state:ITreeState}){
-    console.log(obj);
+    
     this.treeIdEmitter$.emit(obj);
   }  
 }

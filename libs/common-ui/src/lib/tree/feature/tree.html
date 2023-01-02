@@ -7,6 +7,7 @@ tree
 
 <div class="p-2 hover">
         <div *ngFor="let node of content$ | ngrxPush ; index as i" class="d-flex node" (click)="treeClik({iri:node.iri,state:node.state})">
+            <!--
             <span style="white-space: pre; font-size: 12px;" >{{node.space}}</span>            
             <span *ngIf="node.hasChildren">
                 <i *ngIf="node.iconRightEnabled" class="bi bi-caret-right"></i>
@@ -16,6 +17,7 @@ tree
                 <i *ngIf="node.iconRightEnabled" class="bi bi-caret-right"></i>
                 <i *ngIf="!node.iconRightEnabled" class="bi bi-caret-down"></i>
             </span>                            
-            <span>{{node.label }}</span>
+            <span>{{node.label }}</span> -->
+            <sparql-reporter-tree-node [node]="node" [isActive]="node.isActive" [hasNoChildren]="!node.hasChildren"></sparql-reporter-tree-node>
         </div>
     </div>

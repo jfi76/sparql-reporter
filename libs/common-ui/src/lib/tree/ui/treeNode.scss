@@ -1,0 +1,21 @@
+@import 'bootstrap/scss/bootstrap.scss';
+:host{
+    &.icon-not-visible{
+        .node{
+            .icon{
+                visibility: hidden;        
+            }
+        }
+    }
+
+    &.active{
+        .node{
+            .label{
+                text-decoration: underline;
+            }
+        }
+    }
+}
+.node{
+    color:$primary;
+}
