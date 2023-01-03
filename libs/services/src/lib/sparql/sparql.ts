@@ -39,8 +39,12 @@ export class Sparql {
         take(1),        
         map((response:any)=>{
             response.results=response.results.bindings;
+            console.log(response);
             response.results.stmt=stmt;
             this.replacePrefixes(response.results);
+            // response.results=this.replacePrefixes(response.results.bindings, response.head);
+            response.results=this.makeTable(response.results, response.head);
+            console.log(response);
             return response;
         }),
         catchError((err:ErrorEvent)=>{
@@ -50,9 +54,23 @@ export class Sparql {
         })               
     );            
   }
+// , head:IQueryResult['head']
+makeTable(resultInit:IQueryResult['results'],head:IQueryResult['head']){
 
-replacePrefixes(result:any[]){
-    
+    const result:IQueryResult['results']=[];
+    console.log(head.vars);
+
+    for (let i=0; i< resultInit.length; i++){
+        result[i]={};
+        head?.vars.forEach(name=>{    
+    //        console.log(name);
+            result[i][name]=JSON.parse(JSON.stringify(resultInit[i][name]));
+        });
+    }
+    console.log(result);
+    return result;
+}
+replacePrefixes(result:IQueryResult['results']):IQueryResult['results']{    
     for (let i=0; i< result.length; i++){
         for(const name in result[i]){
             if (result[i][name].type==='uri'){
@@ -76,6 +94,7 @@ replacePrefixes(result:any[]){
             }
         }
     }
+    return result;
 }
 
 }
