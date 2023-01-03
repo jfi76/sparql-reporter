@@ -6,10 +6,12 @@ import { ObjectComponent } from './object/object';
 import {HttpClientModule} from '@angular/common/http';
 import { PushModule } from '@ngrx/component';
 import { TreeNodeComponent } from './tree/ui/treeNode';
+import { DynamicTableComponent } from './dynamic-table/feature/dynamic-table';
+import { TableRowComponent } from './dynamic-table/ui/table-row';
 
 @NgModule({
   imports: [CommonModule,HttpClientModule, PushModule],
-  declarations:[TreeComponent, ListComponent, ObjectComponent, TreeNodeComponent],
+  declarations:[TreeComponent, ListComponent, ObjectComponent, TreeNodeComponent, DynamicTableComponent, TableRowComponent],
   exports: [TreeComponent, ListComponent, ObjectComponent]
 })
 export class CommonUiModule {}

@@ -1,6 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, map,  take,  throwError } from 'rxjs';
+import { catchError, map,  Observable,  take,  throwError } from 'rxjs';
+import { IQueryField } from './interfaces';
+
+export interface IQueryResult{
+    head:{vars:any[]},
+    results:{[key:string]:IQueryField}[],
+}
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +34,7 @@ export class Sparql {
   constructor(private http: HttpClient){
 
   }
-  query(stmt:string, infer=''){
+  query(stmt:string, infer=''):Observable<IQueryResult>{
     return this.http.post(this.queryUrl,`query=${encodeURIComponent(this.prefix + stmt)}${infer!=='' ? '&infer='+infer: '' }`,{headers:this.headers}).pipe(
         take(1),        
         map((response:any)=>{

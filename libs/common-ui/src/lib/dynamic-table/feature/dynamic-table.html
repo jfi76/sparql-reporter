@@ -1,0 +1,19 @@
+<table  class="table table-hover align-middle  table-sm">
+    <thead>
+        <tr>
+            <th scope="col" *ngFor="let column of queryResult?.head?.vars; index as i">{{column}}</th>
+        </tr>
+    </thead>
+    <tbody> 
+        <tr *ngFor="let row of queryResult?.results; index as i" >
+            <td *ngFor="let column of row | keyvalue ">
+                {{column.value.value}}
+            </td>            
+              
+       </tr>
+    </tbody>
+</table>
+<!--
+    <span *ngFor="let td of column| keyvalue">{{td.value}}</span>
+    <sparql-reporter-dynamic-table-row [rowData]="row"> </sparql-reporter-dynamic-table-row>
+-->

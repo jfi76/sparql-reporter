@@ -1,3 +1,4 @@
 export interface IQueryField{
-    value:string
+    value:string,
+    type?:string,
 }
