@@ -2,6 +2,7 @@ import { Sparql } from '@sparql-reporter/services';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, Observable, take, throwError, map, tap } from 'rxjs';
 import { IQueryField } from '@sparql-reporter/services';
+import { IQueryResult } from '@sparql-reporter/services';
 
 export enum ITreeState {
   open = 'open',
@@ -78,7 +79,7 @@ export class TreeService {
       } group by ?iri          
     } 
   }`;
-  getSubNodes(stmt: string): Observable<ITreeNodeQuery[]> {
+  getSubNodes(stmt: string): Observable<IQueryResult> {
     console.log(stmt);
     return this.sparql.query(stmt);
   }
