@@ -1,7 +1,7 @@
 import { IQueryResult, Sparql } from '@sparql-reporter/services';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, Observable, take, throwError, map, tap } from 'rxjs';
-import { IQueryField } from '@sparql-reporter/services';
+import { IQueryTableResult, IQueryField } from '@sparql-reporter/services';
 
   export enum IListMode{
   default= 'default', 
@@ -26,7 +26,7 @@ import { IQueryField } from '@sparql-reporter/services';
     classViewStmt='';
     constructor (public sparql: Sparql){
     }
-    prepareQuery(iri:string, mode:IListMode):string{
+    prepareQuery(iri:string, mode: IListMode):string{
         let stmt = this.defaultViewStmt.replace('?param?',iri);
         const lastIndex=stmt.lastIndexOf('}');
         stmt= stmt.substring(0,lastIndex+1) + ` limit ${this.limitRows} ` + stmt.substring(lastIndex+1,stmt.length);
@@ -35,9 +35,9 @@ import { IQueryField } from '@sparql-reporter/services';
     runQuery(iri:string, mode:IListMode){
        return this.queryView(this.prepareQuery(iri, mode));    
     }
-    queryView(stmt: string): Observable<any> {
+    queryView(stmt: string): Observable<IQueryTableResult> {
         console.log(stmt);
-        return this.sparql.query(stmt);
+        return this.sparql.queryResultTable(stmt);
       }    
     initView(iri:string){
         return this.runQuery(iri, IListMode.default);
