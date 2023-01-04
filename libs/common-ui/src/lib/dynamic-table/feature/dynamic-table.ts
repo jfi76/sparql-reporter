@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { IQueryResult } from '@sparql-reporter/services';
+import { IQueryTableResult } from '@sparql-reporter/services';
 
 @Component({
   selector: 'sparql-reporter-dynamic-table',
@@ -10,7 +11,7 @@ import { IQueryResult } from '@sparql-reporter/services';
 
 export class DynamicTableComponent implements OnInit  {
 @Input()
-queryResult?: IQueryResult;
+queryResult?: IQueryTableResult;
 
   ngOnInit(): void {
       console.log('inited');

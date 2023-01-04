@@ -6,10 +6,9 @@
     </thead>
     <tbody> 
         <tr *ngFor="let row of queryResult?.results; index as i" >
-            <td *ngFor="let column of row | keyvalue ">
-                {{column.value.value}}
-            </td>            
-              
+            <td *ngFor="let column of row ">
+                {{column.value}}
+            </td>                          
        </tr>
     </tbody>
 </table>

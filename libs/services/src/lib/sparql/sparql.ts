@@ -7,6 +7,10 @@ export interface IQueryResult{
     head:{vars:any[]},
     results:{[key:string]:IQueryField}[],
 }
+export interface IQueryTableResult{
+    head:{vars:any[]},
+    results:any[],
+}
 
 @Injectable({
   providedIn: 'root',
@@ -43,8 +47,8 @@ export class Sparql {
             response.results.stmt=stmt;
             this.replacePrefixes(response.results);
             // response.results=this.replacePrefixes(response.results.bindings, response.head);
-            response.results=this.makeTable(response.results, response.head);
-            console.log(response);
+//            response.results=this.makeTable(response.results, response.head);
+//            console.log(response);
             return response;
         }),
         catchError((err:ErrorEvent)=>{
@@ -54,22 +58,30 @@ export class Sparql {
         })               
     );            
   }
-// , head:IQueryResult['head']
-makeTable(resultInit:IQueryResult['results'],head:IQueryResult['head']){
 
-    const result:IQueryResult['results']=[];
+queryResultTable(stmt:string, infer=''):Observable<IQueryTableResult>{
+    return this.query(stmt, infer).pipe(
+        map(response=>{
+            response.results=this.makeTable(response.results, response.head);
+            return response;
+        })
+    );
+}
+makeTable(resultInit:IQueryResult['results'],head:IQueryResult['head']):IQueryTableResult['results']{
+
+    const result:IQueryTableResult['results']=[];
     console.log(head.vars);
 
     for (let i=0; i< resultInit.length; i++){
-        result[i]={};
-        head?.vars.forEach(name=>{    
-    //        console.log(name);
-            result[i][name]=JSON.parse(JSON.stringify(resultInit[i][name]));
+        result[i]=[];
+        head?.vars.forEach((name,index)=>{    
+            result[i].push(JSON.parse(JSON?.stringify(resultInit[i][name])));
         });
     }
     console.log(result);
     return result;
 }
+
 replacePrefixes(result:IQueryResult['results']):IQueryResult['results']{    
     for (let i=0; i< result.length; i++){
         for(const name in result[i]){
