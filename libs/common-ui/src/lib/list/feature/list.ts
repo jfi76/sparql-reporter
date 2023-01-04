@@ -23,7 +23,7 @@ export class ListComponent implements OnInit, OnChanges {
   }
  ngOnChanges({treeId}: SimpleChanges): void {
      if (treeId){
-      console.log('list id : '+treeId.currentValue);
+
       this.tableQueryResult=this.listService.initView(this.treeId);
       this.tableQueryResult.subscribe(data=>{console.log(data)});
      }

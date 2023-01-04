@@ -48,7 +48,7 @@ export class Sparql {
             this.replacePrefixes(response.results);
             // response.results=this.replacePrefixes(response.results.bindings, response.head);
 //            response.results=this.makeTable(response.results, response.head);
-//            console.log(response);
+
             return response;
         }),
         catchError((err:ErrorEvent)=>{
@@ -70,7 +70,7 @@ queryResultTable(stmt:string, infer=''):Observable<IQueryTableResult>{
 makeTable(resultInit:IQueryResult['results'],head:IQueryResult['head']):IQueryTableResult['results']{
 
     const result:IQueryTableResult['results']=[];
-    console.log(head.vars);
+
 
     for (let i=0; i< resultInit.length; i++){
         result[i]=[];
@@ -92,7 +92,7 @@ replacePrefixes(result:IQueryResult['results']):IQueryResult['results']{
                     && !result[i][name].value.includes('/',this.prefixReplace[a].str.length) 
                     && !result[i][name].value.includes('#',this.prefixReplace[a].str.length) 
                     ){
-                        console.log('got' + this.prefixReplace[a].replace);
+
                         result[i][name].value=result[i][name].value.replace(this.prefixReplace[a].str,this.prefixReplace[a].replace);
                         foundPrefix=true;
                         break;

@@ -161,7 +161,7 @@ export class TreeService {
     const newContent:ITreeNode[]=[];
     this.content.forEach((row,index)=>{
       if (removeArray.indexOf(index)===-1) newContent.push(row);
-      else console.log('not inc'+index);
+
     });
     this.content=[...newContent];        
   }
@@ -169,7 +169,7 @@ export class TreeService {
     const currentNodeIndex = this.content.findIndex(
       (obj) => obj.iri === treeId
     );
-    console.log(currentNodeIndex + ' ' + treeId);
+
     if (currentNodeIndex!==-1) {
       this.content[currentNodeIndex].isActive = false;
       this.content[currentNodeIndex].collapsedIcon=true;
@@ -182,7 +182,7 @@ export class TreeService {
     if ( this.previousIri!==treeId) this.deactivate( this.previousIri);
     this.previousIri=treeId;
      
-    console.log('processCahnge' + treeId);
+
     const currentNodeIndex = this.content.findIndex(
       (obj) => obj.iri === treeId
     );
