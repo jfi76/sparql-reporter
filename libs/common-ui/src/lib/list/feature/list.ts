@@ -27,6 +27,9 @@ export class ListComponent implements OnInit, OnChanges {
 
       this.tableQueryResult=this.listService.initView(this.treeId);
       // this.tableQueryResult.subscribe(data=>{console.log(data)});
+      this.listService.sparql.query(this.listService.defaultQuery(this.treeId)).subscribe(response=>{
+        console.log(response.results);
+      })
      }
  }
  handleObjectClick(iri:any){

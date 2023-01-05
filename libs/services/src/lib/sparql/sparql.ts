@@ -25,7 +25,7 @@ export class Sparql {
   PREFIX owl: <http://www.w3.org/2002/07/owl#>
   PREFIX js: <http://www.example.com/JSON#>
   PREFIX etl:<http://www.example.com/ETL#>
-  
+  PREFIX report:<http://www.example.com/report#>
   `;
   prefixReplace=[
     {str:'http://www.w3.org/1999/02/22-rdf-syntax-ns#', replace:'rdf:'},
@@ -34,6 +34,7 @@ export class Sparql {
     {str:'http://www.w3.org/2002/07/owl#', replace:'owl:'},
     {str:'http://www.example.com/JSON#', replace:'js:'},
     {str:'http://www.example.com/ETL#', replace:'etl:'},
+    {str:'http://www.example.com/report#', replace:'report:'},    
 ]
   constructor(private http: HttpClient){
 

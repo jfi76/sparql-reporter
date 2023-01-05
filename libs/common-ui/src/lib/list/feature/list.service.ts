@@ -22,8 +22,8 @@ import { IQueryTableResult, IQueryField } from '@sparql-reporter/services';
             ?iri rdfs:label ?label .
             ?iri etl:hasSourceFile ?file .  
             }  `;
-
-    classViewStmt='';
+    defaultQuery=(iri:string)=>`select ?hasDefaultQuery {${iri} report:hasDefaultQuery ?hasDefaultQuery. } `;
+    
     constructor (public sparql: Sparql){
     }
     prepareQuery(iri:string, mode: IListMode):string{
