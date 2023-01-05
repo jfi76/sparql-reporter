@@ -26,7 +26,7 @@ export class ListComponent implements OnInit, OnChanges {
      if (treeId){
 
       this.tableQueryResult=this.listService.initView(this.treeId);
-      this.tableQueryResult.subscribe(data=>{console.log(data)});
+      // this.tableQueryResult.subscribe(data=>{console.log(data)});
      }
  }
  handleObjectClick(iri:any){

@@ -11,7 +11,7 @@
                 <sparql-reporter-list [treeId]="treeId" (emitObjectIri$)="handleObjectClick($event)"></sparql-reporter-list>
             </as-split-area>
             <as-split-area [size]="75">
-                <sparql-reporter-object></sparql-reporter-object>
+                <sparql-reporter-object [objecId]="objectId" (emitObjectIri$)="handleObjectClick($event)"></sparql-reporter-object>
             </as-split-area>       
          </as-split>    
         

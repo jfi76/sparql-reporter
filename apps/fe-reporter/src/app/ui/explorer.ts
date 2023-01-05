@@ -30,8 +30,12 @@ export class ExplorerComponent implements OnInit {
     this.treeState=obj.state;
     this.router.navigate([],{relativeTo:this.activateRoute,queryParams:{treeId:this.treeId,objectId:this.objectId,treeState:this.treeState}})    
  }
- handleObjectClick(iri:any){
-  // this.emitObjectIri$.emit(iri);
-  console.log('object:'+iri);
+
+ handleObjectClick(objectIri:any){
+
+  this.objectId=objectIri;
+  console.log('object:'+objectIri);
+  this.router.navigate([],{relativeTo:this.activateRoute,queryParams:{treeId:this.treeId,objectId:this.objectId,treeState:this.treeState}})    
+
 }
 }

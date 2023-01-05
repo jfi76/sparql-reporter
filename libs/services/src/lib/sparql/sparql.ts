@@ -75,7 +75,7 @@ makeTable(resultInit:IQueryResult['results'],head:IQueryResult['head']):IQueryTa
     for (let i=0; i< resultInit.length; i++){
         result[i]=[];
         head?.vars.forEach((name,index)=>{    
-            result[i].push(JSON.parse(JSON?.stringify(resultInit[i][name])));
+            result[i].push(JSON.parse(JSON?.stringify( resultInit[i][name] ? resultInit[i][name] : '' )));
         });
     }
 

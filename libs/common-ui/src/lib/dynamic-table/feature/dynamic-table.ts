@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IQueryResult } from '@sparql-reporter/services';
 import { IQueryTableResult } from '@sparql-reporter/services';
 
@@ -12,6 +12,7 @@ import { IQueryTableResult } from '@sparql-reporter/services';
 export class DynamicTableComponent implements OnInit  {
 @Input()
 queryResult?: IQueryTableResult;
+@Output()
 emitObjectIri$= new EventEmitter();
   ngOnInit(): void {
       console.log('inited');      
