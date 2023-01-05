@@ -7,11 +7,11 @@ import {HttpClientModule} from '@angular/common/http';
 import { PushModule } from '@ngrx/component';
 import { TreeNodeComponent } from './tree/ui/treeNode';
 import { DynamicTableComponent } from './dynamic-table/feature/dynamic-table';
-import { TableRowComponent } from './dynamic-table/ui/table-row';
+import { TableColumnComponent } from './dynamic-table/ui/table-column';
 
 @NgModule({
   imports: [CommonModule,HttpClientModule, PushModule],
-  declarations:[TreeComponent, ListComponent, ObjectComponent, TreeNodeComponent, DynamicTableComponent, TableRowComponent],
+  declarations:[TreeComponent, ListComponent, ObjectComponent, TreeNodeComponent, DynamicTableComponent, TableColumnComponent],
   exports: [TreeComponent, ListComponent, ObjectComponent]
 })
 export class CommonUiModule {}

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ITreeState } from 'libs/common-ui/src/lib/tree/feature/tree.service';
+import { ITreeState } from '@sparql-reporter/common-ui';
 
 @Component({
   selector: 'sparql-reporter-explorer',
@@ -30,5 +30,8 @@ export class ExplorerComponent implements OnInit {
     this.treeState=obj.state;
     this.router.navigate([],{relativeTo:this.activateRoute,queryParams:{treeId:this.treeId,objectId:this.objectId,treeState:this.treeState}})    
  }
-
+ handleObjectClick(iri:any){
+  // this.emitObjectIri$.emit(iri);
+  console.log('object:'+iri);
+}
 }

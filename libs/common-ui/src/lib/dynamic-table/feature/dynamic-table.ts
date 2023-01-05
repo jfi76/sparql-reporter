@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit } from '@angular/core';
 import { IQueryResult } from '@sparql-reporter/services';
 import { IQueryTableResult } from '@sparql-reporter/services';
 
@@ -12,12 +12,13 @@ import { IQueryTableResult } from '@sparql-reporter/services';
 export class DynamicTableComponent implements OnInit  {
 @Input()
 queryResult?: IQueryTableResult;
-
+emitObjectIri$= new EventEmitter();
   ngOnInit(): void {
-      console.log('inited');
-      
-
+      console.log('inited');      
   }
-  
+  handleColumn(iri:any){
+    console.log('table levele object ' + iri);
+    this.emitObjectIri$.emit(iri);
+  }
   
 }

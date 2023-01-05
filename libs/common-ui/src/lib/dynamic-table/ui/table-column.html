@@ -1,0 +1,3 @@
+
+<span *ngIf="colData?.type==='uri' && colData?.value!==''; else other_content" class="text-primary hand" (click)="handleClick(colData?.value)">{{colData?.value}}</span>
+<ng-template  #other_content>{{colData?.value}}</ng-template>

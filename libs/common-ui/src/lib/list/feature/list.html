@@ -1,1 +1,1 @@
-<sparql-reporter-dynamic-table [queryResult]="tableQueryResult | ngrxPush"></sparql-reporter-dynamic-table>
+<sparql-reporter-dynamic-table [queryResult]="tableQueryResult | ngrxPush" (emitObjectIri$)="handleObjectClick($event)" ></sparql-reporter-dynamic-table>

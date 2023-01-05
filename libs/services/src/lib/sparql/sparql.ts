@@ -78,7 +78,7 @@ makeTable(resultInit:IQueryResult['results'],head:IQueryResult['head']):IQueryTa
             result[i].push(JSON.parse(JSON?.stringify(resultInit[i][name])));
         });
     }
-    console.log(result);
+
     return result;
 }
 

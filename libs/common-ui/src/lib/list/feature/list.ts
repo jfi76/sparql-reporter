@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { IQueryResult } from '@sparql-reporter/services';
 import { Observable } from 'rxjs';
 import { ListService } from './list.service';
@@ -14,7 +14,8 @@ export class ListComponent implements OnInit, OnChanges {
   @Input()
   treeId='';
   tableQueryResult = new Observable<IQueryResult>;
-
+  @Output()
+  emitObjectIri$= new EventEmitter();
   constructor(private listService: ListService){
 
   }
@@ -28,5 +29,9 @@ export class ListComponent implements OnInit, OnChanges {
       this.tableQueryResult.subscribe(data=>{console.log(data)});
      }
  }
-  
+ handleObjectClick(iri:any){
+  console.log('list level obj '+iri);
+  this.emitObjectIri$.emit(iri);
+}
+
 }
