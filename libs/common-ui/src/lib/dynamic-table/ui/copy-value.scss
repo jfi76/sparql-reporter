@@ -1,0 +1,27 @@
+.copy-main{
+.copy-state{
+        visibility: hidden;
+        display: inline-block;
+        background-color: blue;
+        border-radius: 4px;
+        border: -1px solid aqua;
+        color: white;
+        padding-left:2px;
+        padding-right:2px;
+
+    }
+
+}
+
+div:hover {
+    .copy-state{
+        visibility: visible;
+    }
+
+}
+
+
+/*
+
+
+*/

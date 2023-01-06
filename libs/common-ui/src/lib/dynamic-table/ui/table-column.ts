@@ -25,4 +25,14 @@ export class TableColumnComponent implements OnInit , OnChanges {
   handleClick(iri?:string){
     this.emitIri$.emit(iri);
   }
+  copyBuffer(text?:string){
+    if (!navigator.clipboard) {
+      return;
+    }
+    navigator.clipboard.writeText(text || '').then(function() {
+      console.log('Async: Copying to clipboard was successful!');
+    }, function(err) {
+      console.error('Async: Could not copy text: ', err);
+    });    
+  }
 }
