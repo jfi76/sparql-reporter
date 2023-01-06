@@ -1,10 +1,4 @@
-:host{
-    &.isActive{
-        .copy-main{
-            background-color: beige;
-        }
-    }
-}    
+
 .copy-main{
     cursor:pointer;
     .value{

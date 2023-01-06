@@ -26,9 +26,12 @@ activeIndex=-1;
     this.activeIndex=obj.index;
     this.emitObjectIri$.emit(obj.iri);
   }
-  ngOnChanges({activeId}: SimpleChanges): void {
+  ngOnChanges({activeId,queryResult}: SimpleChanges): void {
       if (activeId){
         console.log('table active: ' + this.activeId);
+      }
+      if (queryResult){
+        this.activeIndex=-1;
       }
   }
 }
