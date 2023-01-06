@@ -8,7 +8,7 @@
       <as-split-area [size]="75">
         <as-split direction="vertical"  >
             <as-split-area [size]="25">
-                <sparql-reporter-list [treeId]="treeId" (emitObjectIri$)="handleObjectClick($event)"></sparql-reporter-list>
+                <sparql-reporter-list [treeId]="treeId" [listId]="listId" (emitObjectIri$)="handleObjectClickTable($event)"></sparql-reporter-list>
             </as-split-area>
             <as-split-area [size]="75">
                 <sparql-reporter-object [objecId]="objectId" (emitObjectIri$)="handleObjectClick($event)"></sparql-reporter-object>

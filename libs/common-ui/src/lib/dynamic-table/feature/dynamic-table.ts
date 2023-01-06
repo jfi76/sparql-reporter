@@ -14,6 +14,8 @@ export class DynamicTableComponent implements OnInit  {
 queryResult?: IQueryTableResult;
 @Output()
 emitObjectIri$= new EventEmitter();
+@Input()
+activeId='';
   ngOnInit(): void {
       console.log('inited');      
   }

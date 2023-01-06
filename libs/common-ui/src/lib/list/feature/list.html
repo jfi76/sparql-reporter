@@ -1,2 +1,2 @@
 <input type="text"/><button>find</button>
-<sparql-reporter-dynamic-table [queryResult]="tableQueryResult | ngrxPush" (emitObjectIri$)="handleObjectClick($event)" ></sparql-reporter-dynamic-table>
+<sparql-reporter-dynamic-table [queryResult]="tableQueryResult | ngrxPush" (emitObjectIri$)="handleObjectClick($event)" [activeId]="listId"></sparql-reporter-dynamic-table>

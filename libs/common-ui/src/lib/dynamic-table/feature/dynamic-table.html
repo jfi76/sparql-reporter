@@ -7,7 +7,7 @@
     <tbody> 
         <tr *ngFor="let row of queryResult?.results; index as i" >
             <td *ngFor="let column of row ">
-               <sparql-reporter-dynamic-table-column [colData]="column" (emitIri$)="handleColumn($event)"></sparql-reporter-dynamic-table-column>
+               <sparql-reporter-dynamic-table-column [colData]="column" (emitIri$)="handleColumn($event)" [activeId]="activeId"></sparql-reporter-dynamic-table-column>
             </td>                          
        </tr>
     </tbody>

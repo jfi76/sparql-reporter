@@ -13,7 +13,7 @@ export class ExplorerComponent implements OnInit {
     treeId='';
     treeState:ITreeState=ITreeState.notOpen;
     objectId='';
-
+    listId='';
       constructor(public activateRoute: ActivatedRoute, public router: Router){
     
       }
@@ -28,14 +28,22 @@ export class ExplorerComponent implements OnInit {
     console.log(obj);
     this.treeId=obj.iri;
     this.treeState=obj.state;
-    this.router.navigate([],{relativeTo:this.activateRoute,queryParams:{treeId:this.treeId,objectId:this.objectId,treeState:this.treeState}})    
+    this.router.navigate([],{relativeTo:this.activateRoute,queryParams:{treeId:this.treeId,objectId:this.objectId,treeState:this.treeState,listId:this.listId}})    
  }
 
  handleObjectClick(objectIri:any){
 
   this.objectId=objectIri;
   console.log('object:'+objectIri);
-  this.router.navigate([],{relativeTo:this.activateRoute,queryParams:{treeId:this.treeId,objectId:this.objectId,treeState:this.treeState}})    
+  this.router.navigate([],{relativeTo:this.activateRoute,queryParams:{treeId:this.treeId,objectId:this.objectId,treeState:this.treeState,listId:this.listId}})    
+
+}
+handleObjectClickTable(objectIri:any){
+
+  this.objectId=objectIri;
+  this.listId=objectIri;
+  console.log('object:'+objectIri);
+  this.router.navigate([],{relativeTo:this.activateRoute,queryParams:{treeId:this.treeId,objectId:this.objectId,treeState:this.treeState,listId:this.listId}})    
 
 }
 }

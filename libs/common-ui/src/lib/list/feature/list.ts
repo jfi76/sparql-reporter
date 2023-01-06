@@ -13,6 +13,9 @@ import { ListService } from './list.service';
 export class ListComponent implements OnInit, OnChanges {
   @Input()
   treeId='';
+  @Input()
+  listId='';
+
   tableQueryResult = new Observable<IQueryResult>;
   @Output()
   emitObjectIri$= new EventEmitter();

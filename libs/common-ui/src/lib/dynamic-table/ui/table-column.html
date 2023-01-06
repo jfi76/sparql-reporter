@@ -1,14 +1,9 @@
 
-<!--
-<span *ngIf="colData?.type==='uri' && colData?.value!==''; else other_content" class="text-primary hand" >
-    
-    <sparql-reporter-copy-value [data]="colData?.value"></sparql-reporter-copy-value>
-    -->
     <div *ngIf="colData?.type==='uri' && colData?.value!==''; else other_content" class="copy-main text-primary">
         <span class="value" (click)="handleClick(colData?.value)">{{colData?.value}}</span>
         <span class="copy-state" (click)="copyBuffer(colData?.value)">copy</span>
     </div>    
-<!--</span>-->
+
 <ng-template  #other_content>    
     <div class="copy-main">
         <span class="value" >{{colData?.value}}</span>

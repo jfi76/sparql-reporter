@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, Output, SimpleChanges, EventEmitter } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, Output, SimpleChanges, EventEmitter, HostBinding } from '@angular/core';
 import { IQueryField } from '@sparql-reporter/services';
 
 
@@ -14,12 +14,20 @@ export class TableColumnComponent implements OnInit , OnChanges {
   colData?:IQueryField;
   @Output()
   emitIri$= new EventEmitter();
+  @Input()
+  activeId='';
+  @HostBinding('class.isActive')
+  isActive=false;
   ngOnInit(): void {
       console.log('inited');
   }
   ngOnChanges({colData}: SimpleChanges): void {
-      if (colData){
-        // console.log(this.colData);
+      if (colData){        
+        console.log('test' + this.colData?.value + ' vs ' + this.activeId);
+        if (this.colData?.value===this.activeId) {
+          console.log('isActive' + this.colData?.value + ' ' + this.activeId);
+          this.isActive=true;
+        }                  
       }
   }
   handleClick(iri?:string){
@@ -29,9 +37,7 @@ export class TableColumnComponent implements OnInit , OnChanges {
     if (!navigator.clipboard) {
       return;
     }
-    navigator.clipboard.writeText(text || '').then(function() {
-      console.log('Async: Copying to clipboard was successful!');
-    }, function(err) {
+    navigator.clipboard.writeText(text || '').catch((err)=>{
       console.error('Async: Could not copy text: ', err);
     });    
   }
