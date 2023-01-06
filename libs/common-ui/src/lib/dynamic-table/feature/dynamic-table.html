@@ -1,13 +1,13 @@
 <table  class="table table-hover align-middle  table-sm">
     <thead>
         <tr>
-            <th scope="col" *ngFor="let column of queryResult?.head?.vars; index as i">{{column}}</th>
+            <th scope="col" *ngFor="let column of queryResult?.head?.vars; index as i" >{{column}}</th>
         </tr>
     </thead>
     <tbody> 
-        <tr *ngFor="let row of queryResult?.results; index as i" >
+        <tr *ngFor="let row of queryResult?.results; index as i" [ngClass]="{ 'active' : i===activeIndex }">
             <td *ngFor="let column of row ">
-               <sparql-reporter-dynamic-table-column [colData]="column" (emitIri$)="handleColumn($event)" [activeId]="activeId"></sparql-reporter-dynamic-table-column>
+               <sparql-reporter-dynamic-table-column [colData]="column" (emitIri$)="handleColumn($event)" [activeId]="activeId" [index]="i"></sparql-reporter-dynamic-table-column>
             </td>                          
        </tr>
     </tbody>

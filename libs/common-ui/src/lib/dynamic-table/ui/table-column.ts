@@ -12,26 +12,33 @@ import { IQueryField } from '@sparql-reporter/services';
 export class TableColumnComponent implements OnInit , OnChanges {
   @Input()
   colData?:IQueryField;
+  
   @Output()
   emitIri$= new EventEmitter();
+  
   @Input()
   activeId='';
+
   @HostBinding('class.isActive')
   isActive=false;
+
+  @Input()
+  index=-1;
+
   ngOnInit(): void {
       console.log('inited');
   }
-  ngOnChanges({colData}: SimpleChanges): void {
-      if (colData){        
-        console.log('test' + this.colData?.value + ' vs ' + this.activeId);
+  ngOnChanges({colData,activeId}: SimpleChanges): void {
+      if (activeId){        
         if (this.colData?.value===this.activeId) {
           console.log('isActive' + this.colData?.value + ' ' + this.activeId);
           this.isActive=true;
         }                  
+        else {this.isActive=false;}
       }
   }
   handleClick(iri?:string){
-    this.emitIri$.emit(iri);
+    this.emitIri$.emit({iri:iri,index:this.index});    
   }
   copyBuffer(text?:string){
     if (!navigator.clipboard) {

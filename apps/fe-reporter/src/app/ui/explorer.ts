@@ -42,7 +42,7 @@ handleObjectClickTable(objectIri:any){
 
   this.objectId=objectIri;
   this.listId=objectIri;
-  console.log('object:'+objectIri);
+  console.log('list object:'+objectIri);
   this.router.navigate([],{relativeTo:this.activateRoute,queryParams:{treeId:this.treeId,objectId:this.objectId,treeState:this.treeState,listId:this.listId}})    
 
 }
