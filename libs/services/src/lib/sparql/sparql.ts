@@ -13,6 +13,10 @@ export interface IQueryResult{
 export interface IQueryTableResult{
     head:{vars:any[]},
     results:any[],
+    stmt?:string,
+    start?:Date,
+    end?:Date,
+
 }
 
 @Injectable({

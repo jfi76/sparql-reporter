@@ -11,7 +11,10 @@ import { Sparql } from '../sparql/sparql';
     constructor(private sparq:Sparql){
 
     }
-   async execute(stmt:string){
+   async execute(stmt?:string){
+        this.sparq.queryResultTable(stmt || '').subscribe(obj=>{
+
+        })
         const workbook = new Excel.Workbook();
         const sheet1 =workbook.addWorksheet('test');
         sheet1.addRow(['xxx','zzz','ccc']);

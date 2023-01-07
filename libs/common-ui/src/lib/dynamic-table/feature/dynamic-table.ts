@@ -17,6 +17,7 @@ emitObjectIri$= new EventEmitter();
 @Input()
 activeId='';
 activeIndex=-1;
+currentStmt?:string;
   constructor(private exportStmtExcel:ExportStmtExcel){}
   ngOnInit(): void {
       console.log('inited');      
@@ -32,10 +33,11 @@ activeIndex=-1;
         console.log('table active: ' + this.activeId);
       }
       if (queryResult){
+        this.currentStmt=this.queryResult?.stmt;
         this.activeIndex=-1;
       }
   }
   exportBtn(){
-     this.exportStmtExcel.execute();
+     this.exportStmtExcel.execute(this.currentStmt);
   }  
 }
