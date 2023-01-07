@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
-import { IQueryResult } from '@sparql-reporter/services';
+import { ExportStmtExcel, IQueryResult } from '@sparql-reporter/services';
 import { IQueryTableResult } from '@sparql-reporter/services';
 
 @Component({
@@ -17,6 +17,7 @@ emitObjectIri$= new EventEmitter();
 @Input()
 activeId='';
 activeIndex=-1;
+  constructor(private exportStmtExcel:ExportStmtExcel){}
   ngOnInit(): void {
       console.log('inited');      
   }
@@ -34,4 +35,7 @@ activeIndex=-1;
         this.activeIndex=-1;
       }
   }
+  exportBtn(){
+     this.exportStmtExcel.execute();
+  }  
 }

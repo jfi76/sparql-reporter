@@ -6,6 +6,9 @@ import { IQueryField } from './interfaces';
 export interface IQueryResult{
     head:{vars:any[]},
     results:{[key:string]:IQueryField}[],
+    stmt?:string,
+    start?:Date,
+    end?:Date,
 }
 export interface IQueryTableResult{
     head:{vars:any[]},
@@ -47,9 +50,7 @@ export class Sparql {
             console.log(response);
             response.results.stmt=stmt;
             this.replacePrefixes(response.results);
-            // response.results=this.replacePrefixes(response.results.bindings, response.head);
-//            response.results=this.makeTable(response.results, response.head);
-
+            response.stmt=stmt;
             return response;
         }),
         catchError((err:ErrorEvent)=>{
