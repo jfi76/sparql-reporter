@@ -16,6 +16,8 @@ queryResult?: IQueryTableResult;
 emitObjectIri$= new EventEmitter();
 @Input()
 activeId='';
+@Input()
+iri='';
 activeIndex=-1;
 currentStmt?:string;
   constructor(private exportStmtExcel:ExportStmtExcel){}
@@ -31,6 +33,7 @@ currentStmt?:string;
   ngOnChanges({activeId,queryResult}: SimpleChanges): void {
       if (activeId){
         console.log('table active: ' + this.activeId);
+        
       }
       if (queryResult){
         this.currentStmt=this.queryResult?.stmt;
@@ -38,6 +41,7 @@ currentStmt?:string;
       }
   }
   exportBtn(){
-     this.exportStmtExcel.execute(this.currentStmt);
+    console.log(this.activeId);
+     this.exportStmtExcel.execute(this.currentStmt,'result', (this.iri || 'query') + '.xlsx');
   }  
 }
