@@ -1,9 +1,18 @@
-<div>
-<button type="button" class="btn btn-outline-primary" (click)="exportBtn()">Export</button>
 <table  class="table align-middle  table-sm">
     <thead>
         <tr>
-            <th scope="col" *ngFor="let column of queryResult?.head?.vars; index as i" >{{column}}</th>
+            <th scope="col"  *ngFor="let column of queryResult?.head?.vars; index as i" >   
+                <div *ngIf="i===0; else simle_text" class="d-flex">
+                <button type="button" class="btn btn-sm btn-outline-info btn-export" placement="top" ngbTooltip="Export to file" >
+                    <i class="bi bi-download" (click)="exportBtn()"></i>
+                </button> 
+                    <span class="align-self-end first-col">
+                        {{column}}
+                    </span> 
+                </div>
+                <ng-template #simle_text>{{column}}</ng-template> 
+                
+            </th>
         </tr>
     </thead>
     <tbody> 
@@ -14,7 +23,6 @@
        </tr>
     </tbody>
 </table>
-</div>
 <!--
      {{column.value}}
     <span *ngFor="let td of column| keyvalue">{{td.value}}</span>

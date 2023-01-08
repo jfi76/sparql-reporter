@@ -1,4 +1,5 @@
 <nav class="nav header" >
     <a class="nav-link" [routerLinkActiveOptions]={exact:false} routerLinkActive="active" routerLink="./explorer">sparql reporter</a>
     <a class="nav-link" routerLinkActive="active" routerLink="./connection">connection</a>
+    <a class="nav-link light lp-5" >{{infoString | ngrxPush}}</a>    
 </nav>

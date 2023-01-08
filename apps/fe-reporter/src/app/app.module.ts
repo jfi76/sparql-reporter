@@ -10,9 +10,10 @@ import { AppRoutingModule } from './feature/app-routering.module';
 import { HeaderComponent } from './ui/header';
 import { ConnectionComponent } from './ui/connection';
 import {CommonUiModule} from '@sparql-reporter/common-ui';
+import { PushModule } from '@ngrx/component';
 @NgModule({
   declarations: [AppComponent, NxWelcomeComponent, ExplorerComponent, HeaderComponent, ConnectionComponent],
-  imports: [BrowserModule, NgbModule, AngularSplitModule,AppRoutingModule, CommonUiModule],
+  imports: [BrowserModule, NgbModule, AngularSplitModule,AppRoutingModule, CommonUiModule,  PushModule],
   providers: [],
   bootstrap: [AppComponent],
   exports:[NxWelcomeComponent]

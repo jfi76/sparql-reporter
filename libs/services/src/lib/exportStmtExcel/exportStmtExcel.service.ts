@@ -2,6 +2,7 @@ import save from 'save-file';
 import Excel, { Worksheet } from 'exceljs';
 import { Injectable } from '@angular/core';
 import { Sparql } from '../sparql/sparql';
+import { InfoService } from '../info-service/info-service';
 
 export const DEFAULT_COL_WIDTH = 40;
 export const DEFAULT_TABLE_ROW_LIMIT = 5000;
@@ -10,7 +11,7 @@ export const DEFAULT_TABLE_ROW_LIMIT = 5000;
   providedIn: 'root',
 })
 export class ExportStmtExcel {
-  constructor(private sparq: Sparql) {}
+  constructor(private sparq: Sparql, private infoService:InfoService) {}
   replaceLitmit(stmt: string): string {
     const reg = new RegExp('limit[\\" "]*\\d*', 'gi'); // /limit\{d}\/i
     stmt = stmt.replace(reg, ' ');
@@ -23,7 +24,7 @@ export class ExportStmtExcel {
     format = 'xlsx'
   ) {
     this.sparq.queryResultTable(this.replaceLitmit(stmt || '') ).subscribe(async (response) => {
-      console.log(stmt);
+      this.infoService.add({object:'export', state: fileName+ ' started'});
       const workbook: any = new Excel.Workbook();
       const sheet1 = workbook.addWorksheet(sheetName);
       const colDef: any[] = [];
@@ -31,7 +32,7 @@ export class ExportStmtExcel {
         colDef.push({ header: column, key: column, width: DEFAULT_COL_WIDTH });
       });
       sheet1.columns = colDef;
-
+      this.infoService.add({object:'export', state: fileName+ ' query done'});
       response.results.forEach((row) => {
         const rowContent: string[] = [];
         row.forEach((column: { value: string }) => {
@@ -54,9 +55,10 @@ export class ExportStmtExcel {
           row: response.results.length + 1,
         },
       };
+      this.infoService.add({object:'export', state: fileName+ 'excel finished'});      
       const buf = await workbook[format].writeBuffer();
       save(buf, fileName).then(() => {
-        console.log('exported');
+        this.infoService.add({object:'export', state: fileName+ 'download finished'});        
       });
     });
   }
