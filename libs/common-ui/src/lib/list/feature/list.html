@@ -1,2 +1,25 @@
-<input type="text"/><button>find</button>
+<form class="row g-3 m-2 mb-4">
+    <div class="col-auto">
+      <input type="text" class="form-control" id="inputPassword2" placeholder="iri or word">
+    </div>
+    <div class="col-auto">
+      <button type="button" class="btn btn-primary"><i class="bi bi-search"> Search</i></button>
+    </div>
+    <div class="col-auto">
+        <button type="button" class="btn btn-outline-info"><i class="bi bi-bookmark"></i>Class</button>
+    </div>    
+    <div class="col-auto">
+        <button type="button" class="btn btn-outline-info">Default</button>
+    </div>    
+
+  </form>
+<!--
+<div class="form-group">
+    <label for="usr">Name:</label>
+    <input type="text" class="form-control-sm" id="usr">
+    <button type="button" class="btn btn-sm btn-primary" placement="top" ngbTooltip="Export to file" >
+        <i class="bi bi-search"> Search</i>
+    </button>     
+</div>
+-->
 <sparql-reporter-dynamic-table [queryResult]="tableQueryResult | ngrxPush" (emitObjectIri$)="handleObjectClick($event)" [activeId]="listId" [iri]="treeId"></sparql-reporter-dynamic-table>
