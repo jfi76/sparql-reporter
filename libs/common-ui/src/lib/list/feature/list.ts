@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { IQueryResult } from '@sparql-reporter/services';
 import { Observable } from 'rxjs';
-import { ListService } from './list.service';
+import { IListMode, ListService } from './list.service';
 
 @Component({
   selector: 'sparql-reporter-list',
@@ -19,6 +19,7 @@ export class ListComponent implements OnInit, OnChanges {
   tableQueryResult = new Observable<IQueryResult>;
   @Output()
   emitObjectIri$= new EventEmitter();
+  mode?:IListMode;
   constructor(private listService: ListService){
 
   }
@@ -27,12 +28,22 @@ export class ListComponent implements OnInit, OnChanges {
   }
  ngOnChanges({treeId}: SimpleChanges): void {
      if (treeId){
+      this.mode=IListMode.default;
+      this.tableQueryResult=this.listService.initView(this.treeId, this.mode, '');          
 
-      this.tableQueryResult=this.listService.initView(this.treeId);
-      // this.tableQueryResult.subscribe(data=>{console.log(data)});
-      this.listService.sparql.query(this.listService.defaultQuery(this.treeId)).subscribe(response=>{
-        console.log(response.results);
-      })
+      this.listService.sparql.query(this.listService.defaultQuery(this.treeId)).subscribe(response=>{        
+        console.log('subscribe:'+response.results.length );
+        /*
+        if (response.results.length>0) {
+          this.mode=IListMode.class;
+          this.tableQueryResult=this.listService.initView(this.treeId, this.mode, response?.results[0]['hasDefaultQuery'].value);     
+        }            
+        else {
+          this.mode=IListMode.default;
+          this.tableQueryResult=this.listService.initView(this.treeId, this.mode, '');          
+        }                                      */
+      }
+      );
      }
  }
  handleObjectClick(iri:any){

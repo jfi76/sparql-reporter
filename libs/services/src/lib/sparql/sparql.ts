@@ -51,7 +51,7 @@ export class Sparql {
         take(1),        
         map((response:any)=>{
             response.results=response.results.bindings;
-            console.log(response);
+            // console.log(response);
             response.results.stmt=stmt;
             this.replacePrefixes(response.results);
             response.stmt=stmt;

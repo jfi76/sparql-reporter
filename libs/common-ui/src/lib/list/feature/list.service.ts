@@ -26,20 +26,25 @@ import { IQueryTableResult, IQueryField } from '@sparql-reporter/services';
     
     constructor (public sparql: Sparql){
     }
-    prepareQuery(iri:string, mode: IListMode):string{
-        let stmt = this.defaultViewStmt.replace('?param?',iri);
+    prepareQuery(iri:string, mode: IListMode,stmt:string):string{
+        if (mode===IListMode.default)
+        stmt = this.defaultViewStmt.replace('?param?',iri);
+        if (mode===IListMode.class){
+            stmt=stmt.replace('?param?',iri);
+        }
         const lastIndex=stmt.lastIndexOf('}');
         stmt= stmt.substring(0,lastIndex+1) + ` limit ${this.limitRows} ` + stmt.substring(lastIndex+1,stmt.length);
         return stmt;
     }
-    runQuery(iri:string, mode:IListMode){
-       return this.queryView(this.prepareQuery(iri, mode));    
+    runQuery(iri:string, mode:IListMode,stmt:string): Observable<IQueryTableResult>{
+        return this.sparql.queryResultTable(this.prepareQuery(iri, mode, stmt));
+       // return this.queryView(this.prepareQuery(iri, mode, stmt));    
     }
+    /*
     queryView(stmt: string): Observable<IQueryTableResult> {
-        console.log(stmt);
         return this.sparql.queryResultTable(stmt);
-      }    
-    initView(iri:string){
-        return this.runQuery(iri, IListMode.default);
+      }*/    
+    initView(iri:string, mode:IListMode,stmt:string){
+        return this.runQuery(iri, mode, stmt);
     }
   }  
