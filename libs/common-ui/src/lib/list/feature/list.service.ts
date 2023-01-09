@@ -5,7 +5,7 @@ import { IQueryTableResult, IQueryField } from '@sparql-reporter/services';
 
   export enum IListMode{
   default= 'default', 
-  class= 'default', 
+  class= 'class', 
   find='find'
   }
 
@@ -27,9 +27,9 @@ import { IQueryTableResult, IQueryField } from '@sparql-reporter/services';
     constructor (public sparql: Sparql){
     }
     prepareQuery(iri:string, mode: IListMode,stmt:string):string{
-        if (mode===IListMode.default)
-        stmt = this.defaultViewStmt.replace('?param?',iri);
+        if (mode===IListMode.default) stmt = this.defaultViewStmt.replace('?param?',iri);
         if (mode===IListMode.class){
+            console.log(IListMode.class);
             stmt=stmt.replace('?param?',iri);
         }
         const lastIndex=stmt.lastIndexOf('}');
@@ -44,7 +44,8 @@ import { IQueryTableResult, IQueryField } from '@sparql-reporter/services';
     queryView(stmt: string): Observable<IQueryTableResult> {
         return this.sparql.queryResultTable(stmt);
       }*/    
-    initView(iri:string, mode:IListMode,stmt:string){
+    initView(iri:string, mode:IListMode,stmt:string): Observable<IQueryTableResult>{
+        console.log('mode:'+mode);
         return this.runQuery(iri, mode, stmt);
     }
   }  
