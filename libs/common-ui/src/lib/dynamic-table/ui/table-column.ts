@@ -9,7 +9,7 @@ import { IQueryField } from '@sparql-reporter/services';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class TableColumnComponent implements OnInit , OnChanges {
+export class TableColumnComponent implements  OnChanges {
   @Input()
   colData?:IQueryField;
   
@@ -25,9 +25,6 @@ export class TableColumnComponent implements OnInit , OnChanges {
   @Input()
   index=-1;
 
-  ngOnInit(): void {
-      console.log('inited');
-  }
   ngOnChanges({colData,activeId}: SimpleChanges): void {
       if (activeId){        
         if (this.colData?.value===this.activeId) {

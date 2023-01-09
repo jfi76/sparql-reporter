@@ -80,7 +80,7 @@ export class TreeService {
     } 
   }`;
   getSubNodes(stmt: string): Observable<IQueryResult> {
-    console.log(stmt);
+
     return this.sparql.query(stmt);
   }
 
