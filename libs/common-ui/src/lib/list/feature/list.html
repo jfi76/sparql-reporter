@@ -1,15 +1,15 @@
 <form class="row g-3 m-2 mb-4">
     <div class="col-auto">
-      <input type="text" class="form-control" id="searchText" placeholder="iri or word">
+      <input type="text" class="form-control" id="searchText" placeholder="iri or label or file" [formControl]="searchWord" >
     </div>
     <div class="col-auto">
-      <button type="button" class="btn btn-primary"><i class="bi bi-search"> Search</i></button>
+      <button type="button" class="btn btn-primary" (click)="search()"><i class="bi bi-search"> Search</i></button>
     </div>
     <div class="col-auto">
-        <button type="button" class="btn btn-outline-info"><i class="bi bi-bookmark"></i>Class</button>
+        <button type="button" [disabled]="classButtonDisabled$ | ngrxPush" class="btn btn-outline-info" (click)="classBtn()"><i class="bi bi-bookmark"></i>Class</button>
     </div>    
     <div class="col-auto">
-        <button type="button" class="btn btn-outline-info">Default</button>
+        <button type="button" class="btn btn-outline-info" (click)="defaultBtn()">Default</button>
     </div>    
 
   </form>

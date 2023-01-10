@@ -10,8 +10,9 @@ import { DynamicTableComponent } from './dynamic-table/feature/dynamic-table';
 import { TableColumnComponent } from './dynamic-table/ui/table-column';
 import { CopyValueComponent } from './dynamic-table/ui/copy-value';
 import { NgbTooltipModule } from '@ng-bootstrap/ng-bootstrap';
+import { ReactiveFormsModule } from '@angular/forms';
 @NgModule({
-  imports: [CommonModule,HttpClientModule, PushModule, NgbTooltipModule],
+  imports: [CommonModule,HttpClientModule, PushModule, NgbTooltipModule, ReactiveFormsModule],
   declarations:[TreeComponent, ListComponent, ObjectComponent, TreeNodeComponent, DynamicTableComponent, TableColumnComponent, CopyValueComponent],
   exports: [TreeComponent, ListComponent, ObjectComponent]
 })
