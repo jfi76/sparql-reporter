@@ -45,7 +45,7 @@ export class ExportStmtExcel {
       const sheet2 = workbook.addWorksheet('query stmt');
 
       sheet2.columns = [{ header: 'sparql', width: 200, key: 'sparql' }];
-      sheet2.addRow([stmt]);
+      sheet2.addRow([this.replaceLitmit(stmt || '') ]);
       sheet2.getRow(2).height = 200;
 
       sheet1.autoFilter = {

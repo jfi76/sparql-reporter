@@ -11,7 +11,7 @@ import {
 import { FormControl } from '@angular/forms';
 import { IQueryResult } from '@sparql-reporter/services';
 import { result } from 'lodash';
-import { Observable, Subject, tap } from 'rxjs';
+import { Observable, Subject, tap, BehaviorSubject } from 'rxjs';
 import { IListMode, ListService } from './list.service';
 
 @Component({
@@ -30,13 +30,17 @@ export class ListComponent implements OnInit, OnChanges {
   @Output()
   emitObjectIri$ = new EventEmitter();
   mode?: IListMode;
-  classButtonDisabled$=new Subject<boolean>;
+  // defaulltButtonActive$=new Subject<boolean>;
   defaultClassQuery='';
   searchWord = new FormControl();
+  isClassBtnActive$ = new BehaviorSubject<boolean>(false);
+  isClassBtnDisabled$ = new BehaviorSubject<boolean>(true);
+  defaultName = 'Default View';
+  className = 'Class View';
   constructor(private listService: ListService) {}
   ngOnInit(): void {
-    console.log('list inited');
-    this.classButtonDisabled$.next(true);
+    // this.defaulltButtonActive$.next(true);
+    console.log('init list');
   }
   ngOnChanges({ treeId }: SimpleChanges): void {
     if (treeId) {
@@ -44,9 +48,11 @@ export class ListComponent implements OnInit, OnChanges {
         .query(this.listService.defaultQuery(this.treeId))
         .subscribe((response) => {
           console.log('subscribe:' + response.results.length);
-          this.mode = IListMode.default;
+          this.mode = IListMode.default;    
+          this.isClassBtnActive$.next(false);      
+          this.isClassBtnDisabled$.next(true);
           this.defaultClassQuery=''
-          this.classButtonDisabled$.next(true);          
+       //   this.defaulltButtonActive$.next(true);          
           if (response.results.length === 0)
             this.listService
               .initView(this.treeId, this.mode, '')
@@ -54,8 +60,10 @@ export class ListComponent implements OnInit, OnChanges {
                 this.tableQueryResult.next(result);
               });
             else {
-              this.classButtonDisabled$.next(false);              
+         //     this.defaulltButtonActive$.next(false);              
               this.mode=IListMode.class;
+              this.isClassBtnActive$.next(true);
+              this.isClassBtnDisabled$.next(false);
               this.defaultClassQuery=response?.results[0]['hasDefaultQuery'].value;
               this.listService
               .initView(this.treeId, this.mode, response?.results[0]['hasDefaultQuery'].value)
@@ -64,15 +72,6 @@ export class ListComponent implements OnInit, OnChanges {
               });
 
             }  
-          /*
-        if (response.results.length>0) {
-          this.mode=IListMode.class;
-          this.tableQueryResult=this.listService.initView(this.treeId, this.mode, response?.results[0]['hasDefaultQuery'].value);     
-        }            
-        else {
-          this.mode=IListMode.default;
-          this.tableQueryResult=this.listService.initView(this.treeId, this.mode, '');          
-        }                                      */
         });
     }
   }
@@ -82,6 +81,7 @@ export class ListComponent implements OnInit, OnChanges {
   }
   defaultBtn(){
     this.mode=IListMode.default;
+    this.isClassBtnActive$.next(false);
     this.listService
     .initView(this.treeId, IListMode.default, '')
     .subscribe((result) => {
@@ -91,12 +91,23 @@ export class ListComponent implements OnInit, OnChanges {
 
   classBtn(){
     this.mode=IListMode.class;
+    this.isClassBtnActive$.next(true);
     this.listService
     .initView(this.treeId, IListMode.class, this.defaultClassQuery)
     .subscribe((result) => {
       this.tableQueryResult.next(result);
     });
   }
+  clickBtn(name:string){
+    
+    if (name===this.className){
+      this.classBtn();
+    }
+    if (name===this.defaultName){
+      this.defaultBtn();
+    }
+
+  } 
  search() {
   this.listService
   .searchView(this.treeId, this.mode ,this.defaultClassQuery , this.searchWord.value)

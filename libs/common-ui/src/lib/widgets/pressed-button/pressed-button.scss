@@ -1,0 +1,13 @@
+@import 'bootstrap/scss/bootstrap.scss';
+:host{
+    &.active{
+        button{
+            background-color: $info;
+            color: white;
+        }
+    }
+}
+
+button{
+    background-color: white;
+}

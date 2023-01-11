@@ -5,21 +5,20 @@
     <div class="col-auto">
       <button type="button" class="btn btn-primary" (click)="search()"><i class="bi bi-search"> Search</i></button>
     </div>
+    
     <div class="col-auto">
-        <button type="button" [disabled]="classButtonDisabled$ | ngrxPush" class="btn btn-outline-info" (click)="classBtn()"><i class="bi bi-bookmark"></i>Class</button>
-    </div>    
+        <sparql-reporter-pressed-button [name]="defaultName" (emitName$)="clickBtn($event)" [isActive]="!(isClassBtnActive$ | ngrxPush)">
+            <i class="bi bi-0-square"></i>
+        </sparql-reporter-pressed-button>    
+    </div>      
     <div class="col-auto">
-        <button type="button" class="btn btn-outline-info" (click)="defaultBtn()">Default</button>
-    </div>    
+        <sparql-reporter-pressed-button [name]="className" (emitName$)="clickBtn($event)" [isActive]="isClassBtnActive$ | ngrxPush" [buttonDisabled]="isClassBtnDisabled$ | ngrxPush">
+            <i class="bi bi-bookmark"></i>            
+        </sparql-reporter-pressed-button>    
+    </div>      
 
   </form>
-<!--
-<div class="form-group">
-    <label for="usr">Name:</label>
-    <input type="text" class="form-control-sm" id="usr">
-    <button type="button" class="btn btn-sm btn-primary" placement="top" ngbTooltip="Export to file" >
-        <i class="bi bi-search"> Search</i>
-    </button>     
-</div>
--->
+
+
+
 <sparql-reporter-dynamic-table [queryResult]="tableQueryResult | ngrxPush" (emitObjectIri$)="handleObjectClick($event)" [activeId]="listId" [iri]="treeId"></sparql-reporter-dynamic-table>
