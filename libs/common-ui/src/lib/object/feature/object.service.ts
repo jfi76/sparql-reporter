@@ -21,9 +21,19 @@ export class ObjectService {
             bind(${iri} as ?iri)
             ?iri ?property ?value .
             }  `;
+ referenceViewStmt = (iri: string): string => `select ?iri ?property ?label   
+            {
+            bind(${iri} as ?object) .
+            ?iri ?property ?object .
+            ?iri rdf:type ?class .
+            optional {?iri rdfs:label ?label }
+            }  `;
 
   constructor(public sparql: Sparql) {}
   queryObject(iri: string): Observable<IQueryTableResult> {
     return this.sparql.queryResultTable(this.defaultViewStmt(iri));
+  }
+  querySubjects(iri: string){
+    return this.sparql.queryResultTable(this.referenceViewStmt(iri));
   }
 }
