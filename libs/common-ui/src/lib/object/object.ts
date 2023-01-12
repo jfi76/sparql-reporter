@@ -24,7 +24,7 @@ export class ObjectComponent implements OnInit, OnChanges {
   tableQueryResult = new Subject<IQueryResult>();
   @Output()
   emitObjectIri$ = new EventEmitter();
-  parentName = 'Parent for';
+  parentName = 'Object for';
   defaultName = 'Individual';
   isParentBtnActive$ = new BehaviorSubject<boolean>(false);
   isIndividualBtnActive$ = new BehaviorSubject<boolean>(true);
