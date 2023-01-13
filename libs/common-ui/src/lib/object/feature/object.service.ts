@@ -10,6 +10,11 @@ import {
   tap,
 } from 'rxjs';
 import { IQueryTableResult, IQueryField } from '@sparql-reporter/services';
+export interface IBtnQuery {
+  hasButtonQuery: IQueryField;
+  btnLabel: IQueryField;
+  query: IQueryField;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -28,12 +33,22 @@ export class ObjectService {
             ?iri rdf:type ?class .
             optional {?iri rdfs:label ?label }
             }  `;
+ btnQueryStmt=(iri: string): string => `select ?hasButtonQuery ?btnLabel ?query {
+    ${iri} rdf:type ?iri .
+    ?iri report:hasButtonQuery ?hasButtonQuery . 
+    ?hasButtonQuery rdfs:label ?btnLabel .
+    ?hasButtonQuery report:hasQuery ?query .
+  }`;
 
   constructor(public sparql: Sparql) {}
   queryObject(iri: string): Observable<IQueryTableResult> {
     return this.sparql.queryResultTable(this.defaultViewStmt(iri));
   }
-  querySubjects(iri: string){
+  querySubjects(iri: string):Observable<IQueryTableResult>{
     return this.sparql.queryResultTable(this.referenceViewStmt(iri));
   }
+  queryBtns(iri: string):Observable<IQueryResult>{
+    return this.sparql.query(this.btnQueryStmt(iri));
+  }
+
 }

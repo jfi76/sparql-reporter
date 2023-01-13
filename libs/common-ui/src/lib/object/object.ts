@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { IQueryResult } from '@sparql-reporter/services';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { ObjectService } from './feature/object.service';
+import { IBtnQuery, ObjectService } from './feature/object.service';
 
 @Component({
   selector: 'sparql-reporter-object',
@@ -28,6 +28,8 @@ export class ObjectComponent implements OnInit, OnChanges {
   defaultName = 'Individual';
   isParentBtnActive$ = new BehaviorSubject<boolean>(false);
   isIndividualBtnActive$ = new BehaviorSubject<boolean>(true);
+  dynamicButtons$ =new Subject<IQueryResult['results']>();
+  // dynamicButtons$ =new Subject<IBtnQuery[]>();
   constructor(private objectService: ObjectService) {}
   ngOnInit(): void {
     console.log('inited');
@@ -35,9 +37,11 @@ export class ObjectComponent implements OnInit, OnChanges {
 
   ngOnChanges({ objecId }: SimpleChanges) {
     if (objecId) {
-      console.log('get' + this.objecId);
-      // this.tableQueryResult=this.objectService.queryObject(this.objecId);
       this.defaultBtn();
+       this.objectService.queryBtns(this.objecId).subscribe(response=>{
+        // const ress:IBtnQuery[]=response.results; 
+        this.dynamicButtons$.next(response.results);
+       });
     }
   }
   handleObjectClick(iri: any) {
@@ -56,17 +60,8 @@ export class ObjectComponent implements OnInit, OnChanges {
   }
 
   defaultBtn() {
-    /*
-  this.mode=IListMode.default;
-  this.isClassBtnActive$.next(false);
-  this.listService
-  .initView(this.treeId, IListMode.default, '')
-  .subscribe((result) => {
-    this.tableQueryResult.next(result);
-  });
-*/
-this.isParentBtnActive$.next(false);
-this.isIndividualBtnActive$.next(true);
+    this.isParentBtnActive$.next(false);
+    this.isIndividualBtnActive$.next(true);
 
     this.objectService.queryObject(this.objecId).subscribe((result) => {
       this.tableQueryResult.next(result);
@@ -75,14 +70,6 @@ this.isIndividualBtnActive$.next(true);
 
   parentBtn() {
 
-    /*
-  this.mode=IListMode.class;
-  this.isClassBtnActive$.next(true);
-  this.listService
-  .initView(this.treeId, IListMode.class, this.defaultClassQuery)
-  .subscribe((result) => {
-    this.tableQueryResult.next(result);
-  });*/
   this.isIndividualBtnActive$.next(false);  
   this.isParentBtnActive$.next(true);
 

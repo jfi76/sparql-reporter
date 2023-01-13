@@ -3,7 +3,7 @@
         <tr>
             <th scope="col" *ngFor="let column of queryResult?.head?.vars; index as i" >   
                 <div *ngIf="i===0; else simle_text" class="d-flex">
-                <button type="button" class="btn btn-sm btn-outline-info" placement="top" ngbTooltip="Export to file" >
+                <button type="button" class="btn btn-sm btn-outline-primary" placement="top" ngbTooltip="Export to file" >
                     <i class="bi bi-download" (click)="exportBtn()"></i>
                 </button> 
                     <span class="align-self-end first-col">

@@ -6,6 +6,12 @@
     <div class="col-auto">
         <sparql-reporter-pressed-button [name]="parentName" (emitName$)="clickBtn($event)" [isActive]="isParentBtnActive$ | ngrxPush" >            
         </sparql-reporter-pressed-button>    
-    </div>      
+    </div>    
+
+    <div *ngFor="let btn of dynamicButtons$ | ngrxPush; index as i" class="col-auto">
+        <sparql-reporter-pressed-button [name]="btn['btnLabel'].value" (emitName$)="clickBtn($event)" [isActive]="isParentBtnActive$ | ngrxPush" >            
+        </sparql-reporter-pressed-button>    
+    </div>    
+
 </div>
 <sparql-reporter-dynamic-table [queryResult]="tableQueryResult | ngrxPush" (emitObjectIri$)="handleObjectClick($event)" ></sparql-reporter-dynamic-table>
