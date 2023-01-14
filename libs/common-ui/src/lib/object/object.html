@@ -3,7 +3,7 @@
         <span (click)="handleObjectClick(brc.iri)" class="text-primary breadcrumbs" [ngbTooltip]="brc.label">{{brc.iri}}</span>
     </div>
 </div>
-<div class="row m-2 mb-3">
+<div class="row m-2 mb-3" *ngIf="objecId !==''">
     <div class="col-auto">
         <sparql-reporter-pressed-button [name]="defaultName" (emitName$)="clickBtn($event)" [isActive]="isIndividualBtnActive$ | ngrxPush">            
         </sparql-reporter-pressed-button>    
