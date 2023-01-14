@@ -76,7 +76,6 @@ export class ListComponent implements OnInit, OnChanges {
     }
   }
   handleObjectClick(iri: any) {
-    console.log('list level obj ' + iri);
     this.emitObjectIri$.emit(iri);
   }
   defaultBtn(){

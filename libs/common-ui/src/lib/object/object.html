@@ -1,4 +1,9 @@
-<div class="row g-3 m-2 mb-4">
+<div class="row  m-2 mb-3">
+    <div class="col-auto" *ngFor="let brc of breadCrumbs$ | ngrxPush; index as i">
+        <span (click)="handleObjectClick(brc.iri)" class="text-primary breadcrumbs">{{brc.iri}}</span>
+    </div>
+</div>
+<div class="row m-2 mb-3">
     <div class="col-auto">
         <sparql-reporter-pressed-button [name]="defaultName" (emitName$)="clickBtn($event)" [isActive]="isIndividualBtnActive$ | ngrxPush">            
         </sparql-reporter-pressed-button>    

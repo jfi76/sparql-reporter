@@ -30,7 +30,7 @@ export class ObjectComponent implements OnInit, OnChanges {
   @Output()
   emitObjectIri$ = new EventEmitter();
   @Input()
-  renewBreadcrumbs = false;
+  renewBreadcrumbs? = false;
   breadCrumbs: IBreadCrumb[] = [];
   breadCrumbs$ = new Subject<IBreadCrumb[]>();
   parentName = 'Object for';
@@ -48,11 +48,46 @@ export class ObjectComponent implements OnInit, OnChanges {
 
   ngOnChanges({ objecId, renewBreadcrumbs }: SimpleChanges) {
     if (objecId) {
-      this.defaultBtn();
+      this.isParentBtnActive$.next(false);
+      this.handleDynamicButtons('');
+      this.isIndividualBtnActive$.next(true);
+      this.objectService.queryObject(this.objecId).subscribe((result) => {
+        const newBrc: IBreadCrumb[] = [];
+        let label = '';
+
+        if (result.results.length > 0) {
+          result.results.forEach((row, index) => {
+            if (row[0].value === 'label') label = row[1].value;
+          });
+        }
+
+        if (this.renewBreadcrumbs) {
+          this.breadCrumbs = [{ iri: this.objecId, label: label }];
+          this.breadCrumbs$.next(this.breadCrumbs);
+        } else {
+          let stopBrc = false;
+          this.breadCrumbs.forEach((obj) => {
+            if (!stopBrc) newBrc.push(obj);            
+            if (obj.iri === this.objecId) {
+              stopBrc = true;
+              return;
+            }
+
+          });
+          if (!stopBrc) {
+            this.breadCrumbs.push({ iri: this.objecId, label: label });
+            this.breadCrumbs$.next(this.breadCrumbs);
+          } else {
+            this.breadCrumbs = [...newBrc];
+            this.breadCrumbs$.next(this.breadCrumbs);
+          }
+        }
+        this.tableQueryResult.next(result);
+      });
+
       this.objectService.queryBtns(this.objecId).subscribe((response) => {
         this.dynamicButtons = response;
         this.dynamicButtons$.next(response);
-
       });
     }
   }
