@@ -12,9 +12,7 @@ import {TreeService, OWLTHING, ITreeNode, ITreeState} from './tree.service';
 
 export class TreeComponent implements OnInit, OnChanges {
     @Input() 
-    tree:{iri:string,state:string}={iri:'',state:''};
-    // @Input()
-    // treeState='';
+    tree:{iri:string,state:string}={iri:'owl:Thing',state:''};
     @Output()
     treeIdEmitter$= new EventEmitter(); 
     content$=new Observable<ITreeNode[]>;   
@@ -26,12 +24,10 @@ export class TreeComponent implements OnInit, OnChanges {
   }
   ngOnChanges({tree}: SimpleChanges): void {
       if (tree){              
-        //if (tree.previousValue && tree.currentValue.iri !== tree.previousValue.iri) this.treeService.deactivate(tree.previousValue.iri);              
-        this.treeService.processChange(tree.currentValue.iri);
+        this.treeService.processChange(this.tree.iri);
       }
   }
   treeClik( obj:{iri:string, state:ITreeState}){
-//    if (this.treeService.previousIri!==obj.iri ) this.treeService.deactivate(this.treeService.previousIri);
     this.treeIdEmitter$.emit(obj);
   }  
 }

@@ -10,6 +10,7 @@ import {
   tap,
 } from 'rxjs';
 import { IQueryTableResult, IQueryField } from '@sparql-reporter/services';
+import { OWLTHING } from '../../tree/feature/tree.service';
 
 export enum IListMode {
   default = 'default',
@@ -34,8 +35,10 @@ export class ListService {
 
   constructor(public sparql: Sparql) {}
   prepareQuery(iri: string, mode: IListMode, stmt: string): string {
-    if (mode === IListMode.default)
-      stmt = this.defaultViewStmt.replace('?param?', iri);
+    if (mode === IListMode.default){      
+      if (iri===OWLTHING) stmt = this.defaultViewStmt.replace('bind(?param? as ?param)', '');
+      else stmt = this.defaultViewStmt.replace('?param?', iri);
+    }
     if (mode === IListMode.class) {
       console.log(IListMode.class);
       stmt = stmt.replace('?param?', iri);
@@ -79,10 +82,10 @@ export class ListService {
       defaultClassQuery || ''
     );
     let newStmt = '';
-    const lastIndex = stmt.lastIndexOf(' } ');
+    const lastIndex = stmt.lastIndexOf('}');
     const firstPart = stmt.substring(0, lastIndex);
     const secondPart = stmt.substring(lastIndex);
-    console.log(firstPart + secondPart);
+
     newStmt = firstPart;
     let filterBind = '';
     const filterLabelBind = ` 
@@ -101,7 +104,7 @@ export class ListService {
     } else {
       if (stmt.includes('rdfs:label')) filterBind += filterLabelBind;
       if (stmt.includes('etl:hasSourceFile')) filterBind += filterFileBind;
-      console.log(filterBind);
+
       if (filterBind !== '') {
         newStmt =
           newStmt +

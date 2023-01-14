@@ -179,6 +179,7 @@ export class TreeService {
 
   processChange(treeId: string):void {
     // deactivation 
+
     if ( this.previousIri!==treeId) this.deactivate( this.previousIri);
     this.previousIri=treeId;
      

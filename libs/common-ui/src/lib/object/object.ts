@@ -47,7 +47,7 @@ export class ObjectComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges({ objecId, renewBreadcrumbs }: SimpleChanges) {
-    if (objecId) {
+    if (objecId && this.objecId!=='') {
       this.isParentBtnActive$.next(false);
       this.handleDynamicButtons('');
       this.isIndividualBtnActive$.next(true);
@@ -57,7 +57,6 @@ export class ObjectComponent implements OnInit, OnChanges {
 
         if (result.results.length > 0) {
           result.results.forEach((row, index) => {
-            console.log(row[0]);
             if (row[0].value === 'rdfs:label') label = row[1].value;
           });
         }
@@ -97,8 +96,6 @@ export class ObjectComponent implements OnInit, OnChanges {
   }
 
   clickBtn(name: string) {
-    console.log(name);
-
     if (name === this.parentName) {
       this.parentBtn();
       return;

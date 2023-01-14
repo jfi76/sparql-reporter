@@ -43,7 +43,7 @@ export class ListComponent implements OnInit, OnChanges {
     console.log('init list');
   }
   ngOnChanges({ treeId }: SimpleChanges): void {
-    if (treeId) {
+    if (treeId && this.treeId!=='') {
       this.listService.sparql
         .query(this.listService.defaultQuery(this.treeId))
         .subscribe((response) => {
