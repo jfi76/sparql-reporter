@@ -57,7 +57,8 @@ export class ObjectComponent implements OnInit, OnChanges {
 
         if (result.results.length > 0) {
           result.results.forEach((row, index) => {
-            if (row[0].value === 'label') label = row[1].value;
+            console.log(row[0]);
+            if (row[0].value === 'rdfs:label') label = row[1].value;
           });
         }
 
