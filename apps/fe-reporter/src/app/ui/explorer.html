@@ -2,15 +2,15 @@
 <!--height:100%;  -->
 <div  class="m-0 border-0 h-100">
     <as-split direction="horizontal"  >
-      <as-split-area [size]="25">
+      <as-split-area [size]="15">
         <sparql-reporter-tree [tree]="{iri:treeId, state:treeState}"  (treeIdEmitter$)="treeIdEmitterHandler($event)" ></sparql-reporter-tree>
       </as-split-area>
-      <as-split-area [size]="75">
+      <as-split-area [size]="85">
         <as-split direction="vertical"  >
-            <as-split-area [size]="25">
+            <as-split-area [size]="40">
                 <sparql-reporter-list [treeId]="treeId" [listId]="listId" (emitObjectIri$)="handleObjectClickTable($event)"></sparql-reporter-list>
             </as-split-area>
-            <as-split-area [size]="75">
+            <as-split-area [size]="60">
                 <sparql-reporter-object [objecId]="objectId" [renewBreadcrumbs]="refreshBrc$ | ngrxPush" (emitObjectIri$)="handleObjectClick($event)"></sparql-reporter-object>
             </as-split-area>       
          </as-split>    
