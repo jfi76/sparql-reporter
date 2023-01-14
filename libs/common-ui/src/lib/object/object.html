@@ -9,7 +9,7 @@
     </div>    
 
     <div *ngFor="let btn of dynamicButtons$ | ngrxPush; index as i" class="col-auto">
-        <sparql-reporter-pressed-button [name]="btn['btnLabel'].value" (emitName$)="clickBtn($event)" [isActive]="isParentBtnActive$ | ngrxPush" >            
+        <sparql-reporter-pressed-button [name]="btn['btnLabel']" (emitName$)="clickBtn($event)" [isActive]="btn['isActive'] | ngrxPush" >            
         </sparql-reporter-pressed-button>    
     </div>    
 

@@ -11,9 +11,10 @@ import {
 } from 'rxjs';
 import { IQueryTableResult, IQueryField } from '@sparql-reporter/services';
 export interface IBtnQuery {
-  hasButtonQuery: IQueryField;
-  btnLabel: IQueryField;
-  query: IQueryField;
+  hasButtonQuery: string;
+  btnLabel: string;
+  query: string;
+  isActive:BehaviorSubject<boolean>;
 }
 
 @Injectable({
@@ -47,8 +48,24 @@ export class ObjectService {
   querySubjects(iri: string):Observable<IQueryTableResult>{
     return this.sparql.queryResultTable(this.referenceViewStmt(iri));
   }
-  queryBtns(iri: string):Observable<IQueryResult>{
-    return this.sparql.query(this.btnQueryStmt(iri));
+  queryBtns(iri: string):Observable<IBtnQuery[]>{
+    return this.sparql.query(this.btnQueryStmt(iri)).pipe(
+      map(response=>{
+      const btnArr:IBtnQuery[]=[];
+      response.results.forEach((record)=>{
+        btnArr.push({
+          isActive:new BehaviorSubject(false),
+          query:record['query'].value,
+          hasButtonQuery:record['hasButtonQuery'].value,
+          btnLabel:record['btnLabel'].value,
+        });
+        
+      });
+      return btnArr;
+    }));
   }
+ dynamicBtnResult(iri: string,stmt:string):Observable<IQueryTableResult>{
+  return this.sparql.queryResultTable(stmt.replace('?param?',iri));
+} 
 
 }
