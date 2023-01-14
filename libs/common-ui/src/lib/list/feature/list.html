@@ -8,7 +8,7 @@
     
     <div class="col-auto">
         <sparql-reporter-pressed-button [name]="defaultName" (emitName$)="clickBtn($event)" [isActive]="!(isClassBtnActive$ | ngrxPush)">
-            <i class="bi bi-0-square"></i>
+            <i class="bi bi-0-circle"></i>
         </sparql-reporter-pressed-button>    
     </div>      
     <div class="col-auto" *ngIf="!(isClassBtnDisabled$ | ngrxPush)">
