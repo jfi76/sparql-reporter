@@ -23,8 +23,9 @@ export interface IQueryTableResult{
   providedIn: 'root',
 })
 export class Sparql {
-  queryUrl='http://localhost:3030/migr_mssql_pqsql/sparql';
-  updateUrl='localhost:3030/migr_mssql_pqsql/update';
+  dbName='test2'; //'migr_mssql_pqsql'  
+  queryUrl=`http://localhost:3030/${this.dbName}/sparql`;
+  updateUrl=`localhost:3030/${this.dbName}/update`;
   headers={'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'};
   prefix=`PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
   PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
@@ -33,6 +34,7 @@ export class Sparql {
   PREFIX js: <http://www.example.com/JSON#>
   PREFIX etl:<http://www.example.com/ETL#>
   PREFIX report:<http://www.example.com/report#>
+  PREFIX  etl_at: <http://www.example.com/JSON#@>
   `;
   prefixReplace=[
     {str:'http://www.w3.org/1999/02/22-rdf-syntax-ns#', replace:'rdf:'},
@@ -42,6 +44,7 @@ export class Sparql {
     {str:'http://www.example.com/JSON#', replace:'js:'},
     {str:'http://www.example.com/ETL#', replace:'etl:'},
     {str:'http://www.example.com/report#', replace:'report:'},    
+    {str:'http://www.example.com/JSON#@', replace:'etl_at:'},    
 ]
   constructor(private http: HttpClient){
 

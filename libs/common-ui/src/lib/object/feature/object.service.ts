@@ -31,7 +31,7 @@ export class ObjectService {
             {
             bind(${iri} as ?object) .
             ?iri ?property ?object .
-            ?iri rdf:type ?class .
+            # ?iri rdf:type ?class .
             optional {?iri rdfs:label ?label }
             }  `;
  btnQueryStmt=(iri: string): string => `select ?hasButtonQuery ?btnLabel ?query {

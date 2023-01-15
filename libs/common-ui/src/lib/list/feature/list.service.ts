@@ -27,7 +27,7 @@ export class ListService {
             {
             bind(?param? as ?param)
             ?iri rdf:type ?param .
-            ?iri rdfs:label ?label .
+            optional{?iri rdfs:label ?label } .
             ?iri etl:hasSourceFile ?file .  
             }  `;
   defaultQuery = (iri: string) =>
