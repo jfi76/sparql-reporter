@@ -22,10 +22,11 @@ export interface IBtnQuery {
 })
 export class ObjectService {
   limitRows = 50;
-  defaultViewStmt = (iri: string): string => `select ?property ?value  
+  defaultViewStmt = (iri: string): string => `select ?property ?value  ?label 
             {
             bind(${iri} as ?iri)
             ?iri ?property ?value .
+            optional {?value rdfs:label ?label} .
             }  `;
  referenceViewStmt = (iri: string): string => `select ?iri ?property ?label   
             {

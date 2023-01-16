@@ -89,7 +89,7 @@ export class ListService {
     newStmt = firstPart;
     let filterBind = '';
     const filterLabelBind = ` 
-        ?iri rdfs:label ?searchLabel_xxx .        
+        optional {?iri rdfs:label ?searchLabel_xxx }.        
         `;
     const filterFileBind = ` 
         ?iri etl:hasSourceFile ?searchFile_xxx .                
@@ -115,7 +115,7 @@ export class ListService {
         bind ('${searchWord}' as ?searchWord_xxx) .
         filter (${
           stmt.includes('rdfs:label')
-            ? `regex(?searchLabel_xxx, ?searchWord_xxx ,'i' )`
+            ? `((coalesce(?searchWord_xxx,'')!='' &&  regex(?searchLabel_xxx, ?searchWord_xxx ,'i' )) || coalesce(?searchWord_xxx,'')='')`
             : ''
         } 
         ${
