@@ -1,13 +1,7 @@
-import { IQueryResult, Sparql } from '@sparql-reporter/services';
+import {  Sparql } from '@sparql-reporter/services';
 import { Injectable } from '@angular/core';
 import {
-  BehaviorSubject,
-  catchError,
   Observable,
-  take,
-  throwError,
-  map,
-  tap,
 } from 'rxjs';
 import { IQueryTableResult, IQueryField } from '@sparql-reporter/services';
 import { OWLTHING } from '../../tree/feature/tree.service';
@@ -56,12 +50,7 @@ export class ListService {
     stmt: string
   ): Observable<IQueryTableResult> {
     return this.sparql.queryResultTable(this.prepareQuery(iri, mode, stmt));
-    // return this.queryView(this.prepareQuery(iri, mode, stmt));
   }
-  /*
-      queryView(stmt: string): Observable<IQueryTableResult> {
-          return this.sparql.queryResultTable(stmt);
-        }*/
   initView(
     iri: string,
     mode: IListMode,
