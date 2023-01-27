@@ -22,7 +22,7 @@ export class ListService {
             bind(?param? as ?param)
             ?iri rdf:type ?param .
             optional{?iri rdfs:label ?label } .
-            ?iri etl:hasSourceFile ?file .  
+            optional {?iri etl:hasSourceFile ?file} .  
             }  `;
   defaultQuery = (iri: string) =>
     `select ?hasDefaultQuery {${iri} report:hasDefaultQuery ?hasDefaultQuery. } `;
