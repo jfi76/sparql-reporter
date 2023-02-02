@@ -35,6 +35,8 @@ export class Sparql {
   PREFIX etl:<http://www.example.com/ETL#>
   PREFIX report:<http://www.example.com/report#>
   PREFIX  etl_at: <http://www.example.com/JSON#@>
+  PREFIX  js_at: <http://www.example.com/JSON#@>
+  PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
   `;
   prefixReplace=[
     {str:'http://www.w3.org/1999/02/22-rdf-syntax-ns#', replace:'rdf:'},
@@ -45,6 +47,8 @@ export class Sparql {
     {str:'http://www.example.com/ETL#', replace:'etl:'},
     {str:'http://www.example.com/report#', replace:'report:'},    
     {str:'http://www.example.com/JSON#@', replace:'etl_at:'},    
+    {str:'http://www.example.com/JSON#@', replace:'js_at:'},        
+    {str:'http://www.w3.org/2001/XMLSchema#', replace:'xsd:'},            
 ]
   constructor(private http: HttpClient){
 
