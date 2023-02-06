@@ -20,6 +20,7 @@ activeId='';
 iri='';
 activeIndex=-1;
 currentStmt?:string;
+len?=0;
   constructor(private exportStmtExcel:ExportStmtExcel){}
   ngOnInit(): void {
       console.log('inited');      
@@ -38,6 +39,7 @@ currentStmt?:string;
       if (queryResult){
         this.currentStmt=this.queryResult?.stmt;
         this.activeIndex=-1;
+        this.len=this.queryResult?.results.length;
       }
   }
   exportBtn(){

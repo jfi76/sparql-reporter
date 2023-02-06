@@ -5,9 +5,9 @@
                 <div *ngIf="i===0; else simle_text" class="d-flex">
                 <button type="button" class="btn btn-sm btn-outline-primary" placement="top" ngbTooltip="Export to file" >
                     <i class="bi bi-download" (click)="exportBtn()"></i>
-                </button> 
+                </button>                     
                     <span class="align-self-end first-col">
-                        {{column}}
+                        ({{len}}) {{column}}
                     </span> 
                 </div>
                 <ng-template #simle_text>{{column}}</ng-template> 
@@ -23,8 +23,3 @@
        </tr>
     </tbody>
 </table>
-<!--
-     {{column.value}}
-    <span *ngFor="let td of column| keyvalue">{{td.value}}</span>
-    <sparql-reporter-dynamic-table-row [rowData]="row"> </sparql-reporter-dynamic-table-row>
--->

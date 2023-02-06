@@ -37,12 +37,15 @@ export class ListService {
       console.log(IListMode.class);
       stmt = stmt.replace('?param?', iri);
     }
+    /*
     const lastIndex = stmt.lastIndexOf('}');
     stmt =
       stmt.substring(0, lastIndex + 1) +
       ` limit ${this.limitRows} ` +
       stmt.substring(lastIndex + 1, stmt.length);
-    return stmt;
+      */
+       
+    return stmt+` limit ${this.limitRows} `;
   }
   runQuery(
     iri: string,
