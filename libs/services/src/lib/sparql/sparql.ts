@@ -23,7 +23,7 @@ export interface IQueryTableResult{
   providedIn: 'root',
 })
 export class Sparql {
-  dbName='migration_rdf'; //'migration_rdf_copy'  mig_copy
+  dbName='migration_rdf'; 
   queryUrl=`http://localhost:3030/${this.dbName}/sparql`;
   updateUrl=`localhost:3030/${this.dbName}/update`;
   headers={'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'};

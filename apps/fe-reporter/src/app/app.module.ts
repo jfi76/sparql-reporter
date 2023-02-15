@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './feature/app.component';
-import { NxWelcomeComponent } from './trash/nx-welcome.component';
+
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AngularSplitModule } from 'angular-split';
 import {ExplorerComponent} from './ui/explorer'
@@ -12,11 +12,11 @@ import { ConnectionComponent } from './ui/connection';
 import {CommonUiModule} from '@sparql-reporter/common-ui';
 import { PushModule } from '@ngrx/component';
 @NgModule({
-  declarations: [AppComponent, NxWelcomeComponent, ExplorerComponent, HeaderComponent, ConnectionComponent],
+  declarations: [AppComponent,  ExplorerComponent, HeaderComponent, ConnectionComponent],
   imports: [BrowserModule, NgbModule, AngularSplitModule,AppRoutingModule, CommonUiModule,  PushModule],
   providers: [],
   bootstrap: [AppComponent],
-  exports:[NxWelcomeComponent]
+
 })
 
 export class AppModule {

@@ -2,9 +2,11 @@
 .header{
     height: 100%;
     border-bottom: 2px solid $primary ;    
-    
+    color:aliceblue; 
 }
 .active{
-    color: $primary;  
+//    color: $primary;  
+    font-weight: bold;
+    color:aliceblue; 
     background-color: $info;
 }
