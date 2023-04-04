@@ -23,9 +23,10 @@ export interface IQueryTableResult{
   providedIn: 'root',
 })
 export class Sparql {
-  dbName='migration_rdf'; 
-  queryUrl=`http://localhost:3030/${this.dbName}/sparql`;
-  updateUrl=`localhost:3030/${this.dbName}/update`;
+  dbName= localStorage.getItem("dataset") && localStorage.getItem("dataset")!==null && localStorage.getItem("dataset")!=='' ? localStorage.getItem("dataset") : 'migration_rdf'; 
+  serveUrl= localStorage.getItem("serveUrl")!==null && localStorage.getItem("serveUrl") && localStorage.getItem("serveUrl")!=='' ? localStorage.getItem("serveUrl") : 'http://localhost:3030'; 
+  queryUrl=`${this.serveUrl}/${this.dbName}/sparql`;
+  updateUrl=`${this.serveUrl}/${this.dbName}/update`;
   headers={'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'};
   prefix=`PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
   PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>

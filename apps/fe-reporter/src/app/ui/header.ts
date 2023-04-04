@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
   lastInfo =  this.infoService.lines.subscribe(line=>{
     console.log(line.object + '  ' + line.state);
     this.infoString.next(line.object + '  ' + line.state); 
-  }); 
+  });   
 constructor(public infoService: InfoService ){}
 
   ngOnInit(): void {
