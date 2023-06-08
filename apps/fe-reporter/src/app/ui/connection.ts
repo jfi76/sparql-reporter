@@ -20,6 +20,7 @@ export class ConnectionComponent implements OnInit {
     console.log(this.datasetFc.value);
     localStorage.setItem("dataset",this.datasetFc.value);
     localStorage.setItem("serveUrl",this.trim(this.urlFc.value));
+    location.reload();
   }
   trim(val:string):string{
     if (val.length>0){
